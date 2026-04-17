@@ -1,20 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
+
 package e_commeric;
 
-/**
- *
- * @author Donia
- */
-public class E_commeric {
+import java.sql.*;
 
-    /**
-     * @param args the command line arguments
-     */
+
+public class E_commeric extends DatabaseManager {
+
     public static void main(String[] args) {
-        // TODO code application logic here
+        try{
+        query = "CREATE TABLE IF NOT EXISTS User (" +
+                "Id INT AUTO_INCREMENT, " +
+                "Name VARCHAR(100) NOT NULL, " +
+                "Email VARCHAR(200) CHECK (Email LIKE '%@gmail.com'), " +
+                "Password VARCHAR(100) NOT NULL, " +
+                "Address VARCHAR(100), " +
+                "Role VARCHAR(100), " +
+                "CONSTRAINT pk_user PRIMARY KEY (Id)" +
+                ")";
+          s.execute(query);
+        }
+           catch (Exception e) {
+            System.out.println("Connection Error: " + e.getMessage());
+        }
+
     }
     
 }
