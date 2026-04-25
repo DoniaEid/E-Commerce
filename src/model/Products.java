@@ -16,7 +16,7 @@ public class Products {
     public Products() {
     }
 
-    public Products(int id, String name, double price, int stock, String description, int category_id) {
+    public Products(int id, int category_id, String name, String description,double price, Date created_at) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -24,8 +24,8 @@ public class Products {
         this.description = description;
         this.category_id = category_id;
     }
+    public Products(int id, int category_id, String name, String description,double price) {
 
-    public Products(int id, Date created_AT, String name, double price, int stock, String description, int category_id) {
         this.id = id;
         this.created_AT = created_AT;
         this.name = name;
