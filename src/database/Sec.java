@@ -1,8 +1,7 @@
 
-package e_commeric;
-import java.sql.*;
-import java.io.*;
+package database;
 
+import java.sql.*;
 public class Sec {
     private String add="jdbc:mysql://localhost:3306/e_commeric";
     private String user="root";
@@ -36,9 +35,6 @@ public class Sec {
         Connection r=DriverManager.getConnection(add,user,pass);
         return r;
     }
-    
-    
-    
     
     
 }
