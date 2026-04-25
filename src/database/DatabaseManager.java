@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class DatabaseManager {
     protected static Connection c;
-    protected static Statement s;
+    protected static PreparedStatement s;
     protected static ResultSet r;
     protected static String query = "";
 
@@ -14,7 +14,7 @@ public class DatabaseManager {
         try {
             Sec database = new Sec();
             c = database.connect();
-            s = c.createStatement();
+            s = c.prepareStatement(query);
         } 
         catch (SQLException e) {
             System.out.println("Connection Error: " + e.getMessage());
