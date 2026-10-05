@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - E_Commerce</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/E_Commerce.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header class="site-header">
+        <div class="logo-area">
+            <span class="logo-box">K</span>
+            <span class="logo-text">Krist</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="@Url.Action("Index", "Home")" class="active">Home</a></li>
+            <li><a href="#">Shop <i class="fa-solid fa-chevron-down text-xs"></i></a></li>
+            <li><a href="#">Our Story</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+
+        <div class="nav-actions">
+            <button class="icon-btn" title="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div class="badge-container">
+                <button class="icon-btn" title="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                <span class="badge">2</span>
+            </div>
+            <div class="badge-container">
+                <button class="icon-btn" title="Cart"><i class="fa-solid fa-bag-shopping"></i></button>
+                <span class="badge">3</span>
+            </div>
+            <a href="#" class="login-btn">Login</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <span class="logo-box">K</span>
+                    <span class="logo-text">Krist</span>
+                </div>
+                <p class="footer-desc">
+                    High-end fashion and lifestyle collections designed for modern elegance and timeless comfort.
+                </p>
+                <p class="footer-contact-item"><i class="fa-solid fa-phone"></i> (704) 555-0127</p>
+                <p class="footer-contact-item"><i class="fa-regular fa-envelope"></i> krist@example.com</p>
+                <p class="footer-contact-item"><i class="fa-solid fa-location-dot"></i> 3891 Ranchview Dr. Richardson, California 62639</p>
+            </div>
+
+            <div class="footer-col">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">My Account</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">My Cart</a></li>
+                    <li><a href="#">My Wishlist</a></li>
+                    <li><a href="#">Checkout</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h3>Service</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Delivery Information</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col newsletter-col">
+                <h3>Subscribe</h3>
+                <p>Enter your email below to be the first to know about new collections and product launches.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault();">
+                    <input type="email" placeholder="Your Email" required>
+                    <button type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Krist All Rights reserved.</p>
+            <div class="payment-methods">
+                <i class="fa-brands fa-cc-visa"></i>
+                <i class="fa-brands fa-cc-mastercard"></i>
+                <i class="fa-brands fa-cc-amex"></i>
+                <i class="fa-brands fa-cc-paypal"></i>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
