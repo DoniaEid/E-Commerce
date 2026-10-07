@@ -155,11 +155,26 @@ namespace E_Commerce.Controllers
                 {
                     await userManager.UpdateAsync(u);
 
-                    await signInManager.RefreshSignInAsync(u);
+                    List<Claim> Claims = new List<Claim>();
+
+                    Claims.Add(new Claim(
+                        ClaimTypes.MobilePhone,
+                        u.PhoneNumber ?? ""
+                    ));
+
+                    Claims.Add(new Claim(
+                        ClaimTypes.StreetAddress,
+                        u.Address ?? ""
+                    ));
+
+                    await signInManager.SignInWithClaimsAsync(
+                        u,
+                        false,
+                        Claims
+                    );
 
                     return RedirectToAction("Index", "Home");
                 }
-
                 foreach (var error in result.Errors)
                 {
                     if (error.Code.Contains("UserName"))
