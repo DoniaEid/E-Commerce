@@ -1,6 +1,6 @@
 using E_Commerce.DbContext;
 using E_Commerce.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce
@@ -22,8 +22,8 @@ namespace E_Commerce
                 );
 
             //Inject Identity
-            //builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
 
 
 

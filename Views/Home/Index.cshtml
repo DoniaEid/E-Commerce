@@ -1,8 +1,142 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+ViewData["Title"] = "Home";
+Layout = "_Layout";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/HomeStyle.css" asp-append-version="true" />
+}
+
+<main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <span class="hero-subtitle">Classic Exclusive</span>
+            <h1>Women's Collection</h1>
+            <p class="hero-discount">UPTO 40% OFF</p>
+            <a href="#" class="btn-shop-now">Shop Now <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60" alt="Women's Collection">
+        </div>
+    </section>
+
+    <!-- Shop by Categories -->
+    <section>
+        <div class="section-header">
+            <h2>Shop by Categories</h2>
+            <div class="slider-arrows">
+                <button class="arrow-btn"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="arrow-btn"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=300&auto=format&fit=crop" alt="Men">
+                <button class="cat-btn">Men's Wear</button>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop" alt="Women">
+                <button class="cat-btn">Women's Wear</button>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=300&auto=format&fit=crop" alt="Kids">
+                <button class="cat-btn">Kids Wear</button>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=300&auto=format&fit=crop" alt="Accessories">
+                <button class="cat-btn">Accessories</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Bestseller -->
+    <section>
+        <div class="section-header" style="justify-content: center;">
+            <h2>Our Bestseller</h2>
+        </div>
+        <div class="products-grid">
+
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&auto=format&fit=crop" alt="Product">
+                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
+                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <div class="product-info">
+                    <h4>Mini Dress - Sale</h4>
+                    <span class="product-category">Dress</span>
+                    <div class="product-price-row">
+                        <div class="product-price">
+                            <span class="current-price">$120.00</span>
+                            <span class="old-price">$150.00</span>
+                        </div>
+                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&auto=format&fit=crop" alt="Product">
+                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
+                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <div class="product-info">
+                    <h4>Women Textured Handheld Bag</h4>
+                    <span class="product-category">Bags</span>
+                    <div class="product-price-row">
+                        <div class="product-price">
+                            <span class="current-price">$80.00</span>
+                            <span class="old-price">$100.00</span>
+                        </div>
+                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&auto=format&fit=crop" alt="Product">
+                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
+                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <div class="product-info">
+                    <h4>Pure Color T-Shirt</h4>
+                    <span class="product-category">T-Shirt</span>
+                    <div class="product-price-row">
+                        <div class="product-price">
+                            <span class="current-price">$45.00</span>
+                            <span class="old-price">$60.00</span>
+                        </div>
+                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-img">
+                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&auto=format&fit=crop" alt="Product">
+                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
+                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+                </div>
+                <div class="product-info">
+                    <h4>Casual Sneakers</h4>
+                    <span class="product-category">Shoes</span>
+                    <div class="product-price-row">
+                        <div class="product-price">
+                            <span class="current-price">$95.00</span>
+                            <span class="old-price">$130.00</span>
+                        </div>
+                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>

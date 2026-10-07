@@ -4,8 +4,15 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f9f9f9;
 }
-
-/* --- HEADER & NAVBAR --- */
+.Login {
+    margin-Left: 10px;
+}
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    margin-right: 80px;
+}
 .site-header {
     display: flex;
     justify-content: space-between;
@@ -15,6 +22,15 @@ body {
     border-bottom: 1px solid #eaeaea;
 }
 
+.dropdown {
+    position: relative; 
+}
+
+.dropdown-menu {
+    right: 0 !important;
+    left: auto !important;
+    transform: translateY(8px);
+}
 .logo-area {
     display: flex;
     align-items: center;

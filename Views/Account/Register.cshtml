@@ -1,0 +1,143 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+
+}
+@model UserViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - E_Commerce</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-image-section">
+            <img src="~/Images/Register.avif" alt="Register Model">
+        </div>
+
+        <div class="auth-form-section">
+            <div class="form-wrapper">
+                <h2>Create New Account</h2>
+                <p class="subtitle">Please enter details</p>
+
+                <form asp-controller="Account" asp-action="Register" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div class="row-names">
+
+                        <div class="form-group half">
+                            <label>FIRST NAME</label>
+
+                            <input asp-for="First_Name"
+                                   type="text"
+                                   class="form-control-custom"
+                                   placeholder="Robert"
+                                   required />
+
+                            <span asp-validation-for="First_Name"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group half">
+                            <label>LAST NAME</label>
+
+                            <input asp-for="Last_Name"
+                                   type="text"
+                                   class="form-control-custom"
+                                   placeholder="Fox"
+                                   required />
+
+                            <span asp-validation-for="Last_Name"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>EMAIL ADDRESS</label>
+
+                        <input asp-for="Email"
+                               type="email"
+                               class="form-control-custom"
+                               placeholder="robertfox@example.com"
+                               required />
+
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>PASSWORD</label>
+
+                        <input asp-for="password"
+                               type="password"
+                               class="form-control-custom"
+                               placeholder="••••••••••••"
+                               required />
+
+                        <span asp-validation-for="password"
+                              class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+
+                        <input asp-for="Address"
+                               type="text"
+                               class="form-control-custom"
+                               placeholder="robertfox@example.com"
+                                />
+
+                        <span asp-validation-for="Address"
+                              class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>PhoneNumber</label>
+
+                        <input asp-for="PhoneNumber"
+                               type="text"
+                               class="form-control-custom"
+                               placeholder="robertfox@example.com" />
+
+                        <span asp-validation-for="PhoneNumber"
+                              class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>EMAIL ADDRESS</label>
+
+                        <input asp-for="Email"
+                               type="email"
+                               class="form-control-custom"
+                               placeholder="robertfox@example.com"
+                                />
+
+                        <span asp-validation-for="Email"
+                              class="text-danger"></span>
+                    </div>
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" required />
+                            I agree to the
+                            <a href="#" class="terms-link">Terms & Conditions</a>
+                        </label>
+                    </div>
+                    <div asp-validation-summary="ModelOnly"></div>
+
+                    <button type="submit" class="auth-btn">Signup</button>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+   <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+</body>
+
+</html>
+
