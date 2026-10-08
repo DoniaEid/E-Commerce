@@ -101,18 +101,19 @@
                 @foreach (var size in Model.Sizes)
                 {
                     <label>
-                        <input type="radio"
-                               name="size"
-                               value="@size"
-                               onchange="FilterBySize(this.value)">
-                        @size
+                        <span class="label-text">
+                            <input type="radio"
+                                   name="size"
+                                   value="@size"
+                                   onchange="FilterBySize(this.value)">
+                            @size
+                        </span>
                     </label>
                 }
 
             </div>
         </div>
     </aside>
-
 
 
 

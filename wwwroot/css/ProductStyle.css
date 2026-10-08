@@ -118,7 +118,6 @@
     font-size: 12px;
 }
 
-/* تنسيق السعر (Price Filter) مطابق تماماً للصورة */
 .price-labels {
     display: flex;
     justify-content: space-between;
@@ -145,7 +144,6 @@
     margin-bottom: 5px;
 }
 
-/* تنسيق الألوان (Color Grid) مطابق للصورة 4 في كل صف */
 .color-grid {
     display: grid;
     grid-template-columns: repeat(4, 32px);
@@ -166,12 +164,8 @@
     outline: none;
 }
 
-    .color-circle:hover {
-        transform: scale(1.12);
-        box-shadow: 0 0 0 2px #111;
-    }
+ 
 
-/* المحتوى الرئيسي وشبكة المنتجات */
 .shop-main-content {
     flex-grow: 1;
 }
@@ -394,4 +388,38 @@
     .sidebar-backdrop.active {
         display: block;
     }
+}
+.no-products {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+    .no-products i {
+        font-size: 55px;
+        margin-bottom: 20px;
+        opacity: 0.6;
+    }
+
+    .no-products h3 {
+        font-size: 26px;
+        margin-bottom: 10px;
+    }
+
+    .no-products p {
+        font-size: 15px;
+        opacity: 0.7;
+        margin-bottom: 25px;
+    }
+
+.show-all-btn {
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
 }
