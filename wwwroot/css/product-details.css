@@ -169,7 +169,8 @@
 
     .pd-option-group h2 {
         font-size: 15px;
-        font-weight: 700;
+        color: #aaa5ad;
+        font-weight: 200;
         margin: 0 0 12px;
     }
 
@@ -187,8 +188,8 @@
 }
 
 .pd-color {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     background-color: var(--swatch);
     border: 2px solid transparent;
     border-radius: 50%;
