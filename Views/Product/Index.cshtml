@@ -137,6 +137,8 @@
 </div>
 
 @section Scripts {
+    <script>
+   
         $(document).ready(function () {
             GetAll();
         });
@@ -170,15 +172,15 @@
     }
 
     function filterByCategory(category) {
-
         $.ajax({
-                url: "/Product/FilterByCategory",
-                type: "POST",
-                success: function(result) {
-                $("#PartialViewProduct").html(result);
-           }
+            url: "/Product/FilterByCategory",
+            type: "POST",
+            data: { category: category },
+            success: function(result) {
+            $("#PartialViewProduct").html(result);
+            }
         });
     }
 
-
+    </script>
 }
