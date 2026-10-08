@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="~/css/ProductStyle.css" asp-append-version="true" />
 }
 @model FilterByViewModel
+
 <div class="shop-page-wrapper">
     <div id="sidebarBackdrop" onclick="toggleSidebar()" class="sidebar-backdrop"></div>
 
@@ -15,86 +16,80 @@
             <button onclick="toggleSidebar()" class="close-sidebar-btn"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
-            <div class="filter-group">
-
-                <div class="filter-header-toggle"
-                     onclick="toggleSection('catSection')">
-
-                    <h4>Product Categories</h4>
-                    <i id="catSection-icon"
-                       class="fa-solid fa-chevron-up"></i>
-
-                </div>
-
-                <div id="catSection" class="filter-options-list">
-
-                    <label>
-                        <span class="label-text">
-                            <input type="radio"
-                                   name="category"
-                                   value=""
-                                   onchange="GetAll(this.value)"
-                               checked>
-                            All
-                        </span>
-
-                        <span class="count">(8)</span>
-                    </label>
-
-                    @foreach (var category in Model.Categories)
-                    {
-                        <label>
-                            <span class="label-text">
-
-                                <input type="radio"
-                                       name="category"
-                                       value="@category.Key"
-                                       onchange="filterByCategory(this.value)"
-                                 >
-                                @category.Key
-
-                            </span>
-
-                            <span class="count">
-                                (@category.Value)
-                            </span>
-                        </label>
-                    }
-
-                </div>
+        @* FilterByCategories *@
+        <div class="filter-group">
+            <div class="filter-header-toggle" onclick="toggleSection('catSection')">
+                <h4>Product Categories</h4>
+                <i id="catSection-icon" class="fa-solid fa-chevron-up"></i>
             </div>
 
+            <div id="catSection" class="filter-options-list">
+                <label>
+                    <span class="label-text">
+                        <input type="radio" name="category" value="" onchange="GetAll(this.value)" checked>
+                        All
+                    </span>
+                    <span class="count">(@ViewBag.CountProduct)</span>
+                </label>
 
+                @foreach (var category in Model.Categories)
+                {
+                    <label>
+                        <span class="label-text">
+                            <input type="radio" name="category" value="@category.Key" onchange="filterByCategory(this.value)">
+                            @category.Key
+                        </span>
+                        <span class="count">(@category.Value)</span>
+                    </label>
+                }
+            </div>
+        </div>
+
+        @* FilterByPrice *@
         <div class="filter-group">
             <div class="filter-header-toggle" onclick="toggleSection('priceSection')">
                 <h4>Filter by Price</h4>
                 <i id="priceSection-icon" class="fa-solid fa-chevron-up"></i>
             </div>
+
             <div id="priceSection" class="price-filter-content">
                 <div class="price-labels">
-                    <span id="priceMin">$0</span>
-                    <span id="priceMax">$2000</span>
+                    <span>$0</span>
+                    <span id="priceCurrent">$2000</span>
                 </div>
-                <input type="range" min="0" max="2000" value="2000" class="price-slider" oninput="updatePrice(this.value)">
+
+                <input type="range"
+                       name="ValueRange"
+                       min="0"
+                       max="2000"
+                       value="2000"
+                       class="price-slider"
+                       oninput="updatePrice(this.value); FilterByPrice(this.value)">
             </div>
         </div>
 
+        @* FilterByColors *@
         <div class="filter-group">
             <div class="filter-header-toggle" onclick="toggleSection('colorSection')">
                 <h4>Filter by Color</h4>
                 <i id="colorSection-icon" class="fa-solid fa-chevron-up"></i>
             </div>
-            <div id="colorSection" class="color-grid">
-                <button class="color-circle" style="background: #ff3b3b;" title="Red"></button>
-                <button class="color-circle" style="background: #2b70ff;" title="Blue"></button>
-                <button class="color-circle" style="background: #e67e22;" title="Orange"></button>
-                <button class="color-circle" style="background: #111827;" title="Dark Navy"></button>
-                <button class="color-circle" style="background: #70db2b;" title="Green"></button>
-                <button class="color-circle" style="background: #ffcc00;" title="Yellow"></button>
-                <button class="color-circle" style="background: #8b2bff;" title="Purple"></button>
-            </div>
-        </div>
 
+            <div id="colorSection" class="color-grid">
+                @foreach (var color in Model.Colors)
+                {
+                    <button type="button"
+                            class="color-circle"
+                            style="background: @color;"
+                            title="@color"
+                            value="@color"
+                            onclick="FilterByColor(this.value)">
+                    </button>
+                }
+            </div>
+        </div> 
+
+        @* FilterBySizes *@
         <div class="filter-group">
             <div class="filter-header-toggle" onclick="toggleSection('sizeSection')">
                 <h4>Filter by Size</h4>
@@ -116,7 +111,7 @@
                 <button onclick="toggleSidebar()" class="filter-toggle-btn">
                     <i class="fa-solid fa-filter"></i> Filters
                 </button>
-                <span class="results-text">Showing 1-8 of 8 results</span>
+                <span class="results-text">Showing products</span>
             </div>
             <div class="toolbar-right">
                 <span class="sort-label">Sort by:</span>
@@ -129,58 +124,77 @@
             </div>
         </div>
 
-        <div id="PartialViewProduct">
-            <partail name="PartialViewProduct"></partail>
-        </div>
+        <div id="PartialViewProduct"></div>
     </main>
-</div>
-</div>
+</div> 
 
 @section Scripts {
     <script>
-   
         $(document).ready(function () {
             GetAll();
         });
+
         function toggleSidebar() {
             const sidebar = document.getElementById('shopSidebar');
             const backdrop = document.getElementById('sidebarBackdrop');
+
             sidebar.classList.toggle('active');
             backdrop.classList.toggle('active');
+        }
+
+        function updatePrice(value) {
+            document.getElementById("priceCurrent").innerText = "$" + value;
         }
 
         function toggleSection(sectionId) {
             const section = document.getElementById(sectionId);
             const icon = document.getElementById(sectionId + '-icon');
+
             section.classList.toggle('collapsed');
             icon.classList.toggle('rotated');
         }
 
-        function updatePrice(val) {
-            document.getElementById('priceMax').innerText = '$' + val;
-        }
-
-
-    function GetAll(){
-        $.ajax({
+        function GetAll() {
+            $.ajax({
                 url: "/Product/AllProduct",
                 type: "GET",
-                success: function(result) {
-                $("#PartialViewProduct").html(result);
-            }
-        });
-    }
+                success: function (result) {
+                    $("#PartialViewProduct").html(result);
+                }
+            });
+        }
 
-    function filterByCategory(category) {
-        $.ajax({
-            url: "/Product/FilterByCategory",
-            type: "POST",
-            data: { category: category },
-            success: function(result) {
-            $("#PartialViewProduct").html(result);
-            }
-        });
-    }
+        function filterByCategory(category) {
+            $.ajax({
+                url: "/Product/FilterByCategory",
+                type: "POST",
+                data: { category: category },
+                success: function (result) {
+                    $("#PartialViewProduct").html(result);
+                }
+            });
+        }
 
+        function FilterByPrice(ValueRange) {
+            $.ajax({
+                url: "/Product/FilterByPrice",
+                type: "POST",
+                data: { ValueRange: ValueRange },
+                success: function (result) {
+                    $("#PartialViewProduct").html(result);
+                }
+            });
+        }
+
+        function FilterByColor(ValueColor){
+            $.ajax({
+                url: "/Product/FilterByColor",
+                type: "POST",
+                data: { ValueColor: ValueColor },
+                success: function (result) {
+                    $("#PartialViewProduct").html(result);
+                }
+            });
+        }
     </script>
 }

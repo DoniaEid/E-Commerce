@@ -17,7 +17,7 @@ namespace E_Commerce.Controllers
             filterByViewModel.Categories = ProductBL.AllCategories();
             filterByViewModel.Sizes = ProductBL.AllSizess();
             filterByViewModel.Colors = ProductBL.AllColors();
-
+            ViewBag.CountProduct = ProductBL.AllProducts().Count();
             return View(filterByViewModel);
         }
 
@@ -34,5 +34,19 @@ namespace E_Commerce.Controllers
             var products = ProductBL.AllProducts();
             return PartialView("PartialViewProduct", products);
         }
+        [HttpPost]
+        public IActionResult FilterByPrice(int ValueRange)
+        {
+            var products = ProductBL.FilterByPrice(ValueRange);
+            return PartialView("PartialViewProduct", products);
+        }
+
+        [HttpPost]
+        public IActionResult FilterByColor(string ValueColor)
+        {
+            var products = ProductBL.FilterByColor(ValueColor);
+            return PartialView("PartialViewProduct", products);
+        }
+
     }
 }
