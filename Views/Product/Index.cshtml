@@ -95,15 +95,27 @@
                 <h4>Filter by Size</h4>
                 <i id="sizeSection-icon" class="fa-solid fa-chevron-up"></i>
             </div>
+
             <div id="sizeSection" class="size-options-list">
-                <label><input type="checkbox"> S</label>
-                <label><input type="checkbox"> M</label>
-                <label><input type="checkbox"> L</label>
-                <label><input type="checkbox"> XL</label>
-                <label><input type="checkbox"> XXL</label>
+
+                @foreach (var size in Model.Sizes)
+                {
+                    <label>
+                        <input type="radio"
+                               name="size"
+                               value="@size"
+                               onchange="FilterBySize(this.value)">
+                        @size
+                    </label>
+                }
+
             </div>
         </div>
     </aside>
+
+
+
+
 
     <main class="shop-main-content">
         <div class="shop-toolbar-card">
@@ -191,6 +203,16 @@
                 url: "/Product/FilterByColor",
                 type: "POST",
                 data: { ValueColor: ValueColor },
+                success: function (result) {
+                    $("#PartialViewProduct").html(result);
+                }
+            });
+        }
+          function FilterBySize(ValueSize){
+            $.ajax({
+                url: "/Product/FilterBySize",
+                type: "POST",
+                data: { ValueSize: ValueSize },
                 success: function (result) {
                     $("#PartialViewProduct").html(result);
                 }

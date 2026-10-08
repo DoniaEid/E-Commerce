@@ -48,5 +48,11 @@ namespace E_Commerce.Controllers
             return PartialView("PartialViewProduct", products);
         }
 
+        [HttpPost]
+        public IActionResult FilterBySize(string ValueSize)
+        {
+            var products = ProductBL.FilterBySize(ValueSize);
+            return PartialView("PartialViewProduct", products);
+        }
     }
 }

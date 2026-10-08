@@ -43,6 +43,17 @@ namespace E_Commerce.Models
             return result;
 
         }
+        public List<Product> FilterBySize(string ValueSize)
+        {
+            var result = _Context.Product
+                         .AsNoTracking()
+                         .Include(x => x.Category)
+                         .Where(x => x.ProductVariants
+                            .Any(x => x.size.Name == ValueSize))
+                         .ToList();
+            return result;
+
+        }
         public List<Product> AllProducts()
         {
             var result = _Context.Product
