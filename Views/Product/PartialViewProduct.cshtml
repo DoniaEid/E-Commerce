@@ -1,0 +1,45 @@
+﻿
+
+
+@model List<Product>
+
+
+   <div class="products-grid-container">
+
+
+    @foreach (var p in Model)
+    {
+        <div class="product-item-card">
+                <div class="product-img-box">
+                    <img src="@p.ImageUrl" alt="Dress">
+
+                    <div class="product-badges">
+                        <button class="badge-icon" onclick="toggleHeart(this)"><i class="fa-regular fa-heart"></i></button>
+                        <button class="badge-icon" onclick="alert('Quick view clicked!')"><i class="fa-regular fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <div class="product-info-box">
+                    <span class="cat-name">@p.Name</span>
+                    <h3 class="prod-name">@p.Category.Name</h3>
+                    <div class="prod-footer">
+                        <div class="prices">
+                            <span class="current">$@p.NewPrice</span>
+                            <span class="old">$@p.OldPrice</span>
+                        </div>
+                        <button class="add-btn"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+
+
+            }
+
+
+
+
+        </div>
+
+
+
+

@@ -27,7 +27,7 @@ namespace E_Commerce
 
 
 
-
+            builder.Services.AddScoped<ProductBL>();
 
 
 
