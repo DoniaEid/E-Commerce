@@ -62,14 +62,28 @@
             <div class="pd-price"><span>$@Model.First().product.NewPrice</span><del>$@Model.First().product.OldPrice</del></div>
 
             <p class="pd-description">
-                @Model.First().product.Description)
+                @Model.First().product.Description
             </p>
 
             <div class="pd-option-group">
                 <h2>Color</h2>
                 <div class="pd-colors" role="group" aria-label="Choose a color">
-                    @foreach(var color in @Model){
-                        <button type="button" class="pd-color selected" style="--swatch:#@color.color.Name" aria-label="@color.color.Name"></button>
+                    @{
+                        var Colors = Model
+                            .Select(x => x.color.Name)
+                            .Distinct();
+                        bool isFirstColor = true;
+                    }
+
+                   @foreach (var color in Colors)
+                    {
+                        <button type="button"
+                                class="pd-color @(isFirstColor ? "selected" : "")"
+                                style="--swatch: @color; background-color: @color;" 
+                                aria-label="@color"
+                                onclick="selectOption(this, '.pd-color')">
+                        </button>
+                        isFirstColor = false;
                     }
                 </div>
             </div>
@@ -77,10 +91,21 @@
             <div class="pd-option-group">
                 <h2>Size</h2>
                 <div class="pd-sizes" role="group" aria-label="Choose a size">
-                     @foreach(var size in @Model){
-                      <button type="button" class="pd-size selected">@size.size.Name</button>
+                    @{
+                        var Sizes = Model
+                            .Select(x => x.size.Name)
+                            .Distinct();
+                        bool isFirstSize = true;
                     }
-                  
+                    @foreach (var size in Sizes)
+                    {
+                        <button type="button"
+                                class="pd-size @(isFirstSize ? "selected" : "")"
+                                onclick="selectOption(this, '.pd-size')">
+                            @size
+                        </button>
+                        isFirstSize = false;
+                    }
                 </div>
             </div>
 
