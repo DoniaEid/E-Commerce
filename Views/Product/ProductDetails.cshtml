@@ -1,0 +1,233 @@
+﻿@{
+    ViewData["Title"] = "Product Details";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/product-details.css" asp-append-version="true" />
+}
+@model List<ProductVariant>
+<div class="pd-page">
+    <div class="pd-breadcrumb">
+        <a asp-controller="Home" asp-action="Index">Home</a><span>›</span>
+        <a asp-controller="Product" asp-action="Index">Shop</a><span>›</span>
+        <span>Women Textured Handheld Bag</span>
+    </div>
+
+    <section class="pd-product">
+        <div class="pd-gallery">
+            <div class="pd-main-image">
+                <img id="mainProductImage"
+                     src="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=900&q=85"
+                     alt="Product image" />
+            </div>
+            <div class="pd-thumbnails">
+                <button class="pd-thumb active" type="button" aria-label="View product image 1"
+                        data-image="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=900&q=85">
+                    <img src="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=200&q=80" alt="" />
+                </button>
+                <button class="pd-thumb" type="button" aria-label="View product image 2"
+                        data-image="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=900&q=85">
+                    <img src="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=200&q=80" alt="" />
+                </button>
+                <button class="pd-thumb" type="button" aria-label="View product image 3"
+                        data-image="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=85">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=200&q=80" alt="" />
+                </button>
+                <button class="pd-thumb" type="button" aria-label="View product image 4"
+                        data-image="https://images.unsplash.com/photo-1583743814966-8936f37f4678?auto=format&fit=crop&w=900&q=85">
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f37f4678?auto=format&fit=crop&w=200&q=80" alt="" />
+                </button>
+            </div>
+        </div>
+
+        <div class="pd-info">
+            <div class="pd-title-row">
+                <h3>@Model.First().product.Category.Name</h3>
+                @if(@Model.Sum(x=>x.Instock)>0){
+                   <span class="pd-stock">In Stock</span>
+                }
+                else
+                {
+                    <span class="pd-stock">Out Of Stock</span>
+                }
+            </div>
+            <p class="pd-subtitle">@Model.First().product.Name</p>
+
+            <div class="pd-rating">
+                <span class="pd-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                <span class="pd-reviews">(121 Reviews)</span>
+            </div>
+
+            <div class="pd-price"><span>$@Model.First().product.NewPrice</span><del>$@Model.First().product.OldPrice</del></div>
+
+            <p class="pd-description">
+                @Model.First().product.Description)
+            </p>
+
+            <div class="pd-option-group">
+                <h2>Color</h2>
+                <div class="pd-colors" role="group" aria-label="Choose a color">
+                    @foreach(var color in @Model){
+                        <button type="button" class="pd-color selected" style="--swatch:#@color.color.Name" aria-label="@color.color.Name"></button>
+                    }
+                </div>
+            </div>
+
+            <div class="pd-option-group">
+                <h2>Size</h2>
+                <div class="pd-sizes" role="group" aria-label="Choose a size">
+                     @foreach(var size in @Model){
+                      <button type="button" class="pd-size selected">@size.size.Name</button>
+                    }
+                  
+                </div>
+            </div>
+
+            <div class="pd-actions">
+                <div class="pd-quantity" aria-label="Quantity selector">
+                    <button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button>
+                    <span id="qtyValue">1</span>
+                    <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+                </div>
+                <button type="button" class="pd-add-cart" id="addToCart">Add to Cart</button>
+                <button type="button" class="pd-wishlist" id="wishlistButton" aria-label="Add to wishlist">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+            <p class="pd-message" id="productMessage" aria-live="polite"></p>
+        </div>
+    </section>
+
+    <section class="pd-tabs-section">
+        <div class="pd-tabs" role="tablist">
+            <button type="button" class="pd-tab active" data-tab="description">Descriptions</button>
+            <button type="button" class="pd-tab" data-tab="information">Additional Information</button>
+            <button type="button" class="pd-tab" data-tab="reviews">Reviews</button>
+        </div>
+        <div class="pd-tab-content" id="description">
+            <p>
+                It is a long established fact that a reader will be distracted by the readable content
+                of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
+                more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
+                making it look like readable English. Many desktop publishing packages and web page editors
+                now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
+                many web sites still in their infancy.
+            </p>
+            <p>Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</p>
+        </div>
+        <div class="pd-tab-content" id="information" hidden>
+            <p><strong>Material:</strong> Polyester blend</p>
+            <p><strong>Care:</strong> Hand wash gently; do not bleach.</p>
+            <p><strong>Fit:</strong> Regular fit</p>
+        </div>
+        <div class="pd-tab-content" id="reviews" hidden>
+            <p><strong>Customer reviews</strong> — 5.0 out of 5 based on 121 reviews.</p>
+            <p>“Beautiful quality and lovely details.”</p>
+        </div>
+    </section>
+
+    <section class="pd-related">
+        <h2>Related Products</h2>
+        <div class="pd-related-grid">
+            <article class="pd-related-card">
+                <a href="#" class="pd-related-image">
+                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=600&q=85" alt="Printed casual shirt" />
+                </a>
+                <h3>US Polo</h3><p>Tailored Cotton Casual Shirt</p>
+                <div class="pd-related-price">$40.00 <del>$50.00</del></div>
+            </article>
+            <article class="pd-related-card">
+                <a href="#" class="pd-related-image">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=85" alt="Men's blazer" />
+                </a>
+                <h3>Roadstar</h3><p>Printed Blazer for Men</p>
+                <div class="pd-related-price">$60.00 <del>$70.00</del></div>
+            </article>
+            <article class="pd-related-card">
+                <a href="#" class="pd-related-image">
+                    <img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=85" alt="Red T-shirt" />
+                </a>
+                <h3>YK Disney</h3><p>Red Printed T-Shirt</p>
+                <div class="pd-related-price">$30.00 <del>$35.00</del></div>
+            </article>
+            <article class="pd-related-card">
+                <a href="#" class="pd-related-image">
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=85" alt="Hand purse" />
+                </a>
+                <h3>Flora</h3><p>Leather Hand Purse</p>
+                <div class="pd-related-price">$35.00 <del>$45.00</del></div>
+            </article>
+        </div>
+    </section>
+
+    <section class="pd-benefits">
+        <article><i class="fa-solid fa-box"></i><h3>Free Shipping</h3><p>Free shipping for orders above $150</p></article>
+        <article><i class="fa-regular fa-circle-dollar-to-slot"></i><h3>Money Guarantee</h3><p>Within 30 days for an exchange</p></article>
+        <article><i class="fa-solid fa-headphones"></i><h3>Online Support</h3><p>24 hours a day, 7 days a week</p></article>
+        <article><i class="fa-regular fa-credit-card"></i><h3>Flexible Payment</h3><p>Pay with multiple credit cards</p></article>
+    </section>
+</div>
+
+@section Scripts {
+    <script>
+        // Product gallery
+        document.querySelectorAll(".pd-thumb").forEach(function (thumb) {
+            thumb.addEventListener("click", function () {
+                document.getElementById("mainProductImage").src = this.dataset.image;
+                document.querySelectorAll(".pd-thumb").forEach(x => x.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+
+        // Color selection
+        document.querySelectorAll(".pd-color").forEach(function (color) {
+            color.addEventListener("click", function () {
+                document.querySelectorAll(".pd-color").forEach(x => x.classList.remove("selected"));
+                this.classList.add("selected");
+            });
+        });
+
+        // Size selection
+        document.querySelectorAll(".pd-size").forEach(function (size) {
+            size.addEventListener("click", function () {
+                document.querySelectorAll(".pd-size").forEach(x => x.classList.remove("selected"));
+                this.classList.add("selected");
+            });
+        });
+
+        // Quantity
+        let quantity = 1;
+        const qtyValue = document.getElementById("qtyValue");
+        document.getElementById("qtyMinus").addEventListener("click", function () {
+            quantity = Math.max(1, quantity - 1);
+            qtyValue.textContent = quantity;
+        });
+        document.getElementById("qtyPlus").addEventListener("click", function () {
+            quantity++;
+            qtyValue.textContent = quantity;
+        });
+
+        // Demo buttons only: connect these to your MVC actions later.
+        document.getElementById("addToCart").addEventListener("click", function () {
+            document.getElementById("productMessage").textContent =
+                "Demo only: connect this button to your AddToCart action.";
+        });
+        document.getElementById("wishlistButton").addEventListener("click", function () {
+            this.classList.toggle("active");
+            this.innerHTML = this.classList.contains("active")
+                ? '<i class="fa-solid fa-heart"></i>'
+                : '<i class="fa-regular fa-heart"></i>';
+        });
+
+        // Tabs
+        document.querySelectorAll(".pd-tab").forEach(function (tab) {
+            tab.addEventListener("click", function () {
+                document.querySelectorAll(".pd-tab").forEach(x => x.classList.remove("active"));
+                document.querySelectorAll(".pd-tab-content").forEach(x => x.hidden = true);
+                this.classList.add("active");
+                document.getElementById(this.dataset.tab).hidden = false;
+            });
+        });
+    </script>
+}

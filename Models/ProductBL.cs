@@ -91,6 +91,39 @@ namespace E_Commerce.Models
             return result;
         }
 
-        
+        public List<Product> OrderType(string Type)
+        {
+            var List = AllProducts();
+            if (Type == "Low to High")
+            {
+                return List.OrderBy(x => x.NewPrice).ToList();
+
+            }
+            else if (Type == "High to Low")
+            {
+                return List.OrderByDescending(x => x.NewPrice).ToList();
+
+            }
+            else
+            {
+                return List;
+            }
+        }
+
+        public List<ProductVariant> GetProductById(int id)
+        {
+            var product = _Context.ProductVariant
+                                  .AsNoTracking()
+                                  .AsSplitQuery()
+                                  .Include(x => x.color)
+                                  .Include(x => x.size)
+                                  .Include(x => x.product)
+                                  .ThenInclude(x=>x.Category)
+                          .Where(x => x.ProductId == id)
+                          .ToList();
+            return product;
+
+        }
+
     }
 }

@@ -8,6 +8,7 @@ namespace E_Commerce.DbContext
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Product> Product { get; set; }
+        public DbSet<ProductVariant> ProductVariant { get; set; }
         public DbSet<Color> Color{ get; set; }
         public DbSet<Size> Size{ get; set; }
         public DbSet<Category> Category { get; set; }

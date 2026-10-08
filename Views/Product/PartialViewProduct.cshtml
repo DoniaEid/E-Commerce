@@ -23,15 +23,32 @@ else{
                 <div class="product-img-box">
                     <img src="@p.ImageUrl" alt="Dress">
 
-                    <div class="product-badges">
-                        <button class="badge-icon" onclick="toggleHeart(this)"><i class="fa-regular fa-heart"></i></button>
-                        <button class="badge-icon" onclick="alert('Quick view clicked!')"><i class="fa-regular fa-eye"></i></button>
+                        <div class="product-badges">
+
+                            <a asp-controller="ProductDetails"
+                               asp-action="AddToFavorite"
+                               asp-route-productId="@p.Id"
+                               class="badge-icon">
+
+                                <i class="fa-regular fa-heart"></i>
+
+                            </a>
+
+                        <a asp-controller="Product"
+                           asp-action="GetProductById"
+                           asp-route-id="@p.Id"
+                           class="badge-icon">
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </a>
+
                     </div>
                 </div>
 
                 <div class="product-info-box">
                     <span class="cat-name">@p.Name</span>
-                    <h3 class="prod-name">@p.Category.Name</h3>
+                    <h3 class="prod-name"> @p.Category.Name</h3>
                     <div class="prod-footer">
                         <div class="prices">
                             <span class="current">$@p.NewPrice</span>

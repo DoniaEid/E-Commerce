@@ -1,5 +1,7 @@
 ﻿@{
     ViewData["Title"] = "All Products";
+    Layout = "_Layout";
+
 }
 
 @section Styles {
@@ -115,9 +117,6 @@
         </div>
     </aside>
 
-
-
-
     <main class="shop-main-content">
         <div class="shop-toolbar-card">
             <div class="toolbar-left">
@@ -128,11 +127,10 @@
             </div>
             <div class="toolbar-right">
                 <span class="sort-label">Sort by:</span>
-                <select class="sort-dropdown">
-                    <option>Latest</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Popularity</option>
+                <select class="sort-dropdown" onchange="OrderProduct(this.value)">
+                    <option value="Latest">Latest</option>
+                    <option value="Low to High">Price: Low to High</option>
+                    <option value="High to Low">Price: High to Low</option>
                 </select>
             </div>
         </div>
@@ -140,6 +138,9 @@
         <div id="PartialViewProduct"></div>
     </main>
 </div> 
+
+
+
 
 @section Scripts {
     <script>
@@ -214,6 +215,16 @@
                 url: "/Product/FilterBySize",
                 type: "POST",
                 data: { ValueSize: ValueSize },
+                success: function (result) {
+                    $("#PartialViewProduct").html(result);
+                }
+            });
+        }
+           function OrderProduct(OrderType){
+            $.ajax({
+                url: "/Product/OrderProduct",
+                type: "POST",
+                data: { OrderType: OrderType},
                 success: function (result) {
                     $("#PartialViewProduct").html(result);
                 }
