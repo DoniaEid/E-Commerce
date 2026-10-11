@@ -64,9 +64,18 @@ namespace E_Commerce.Controllers
         [HttpGet]
         public IActionResult GetProductById(int id)
         {
-            var productVariant= ProductBL.GetProductById(id);
-         
-            return View("ProductDetails", productVariant);
+            var product= ProductBL.GetProductById(id);
+            ProductViewModel p = new ProductViewModel();
+            p.Name = product.Name;
+            p.OldPrice = product.OldPrice;
+            p.NewPrice = product.NewPrice;
+            p.Description = product.Description;
+            p.CategoryName = product.Category.Name;
+            p.ProductVariant = product.ProductVariants;
+            p.colors = product.ProductVariants.Select(x => x.color.Name).Distinct().ToList();
+            p.sizes = product.ProductVariants.Select(x => x.size.Name).Distinct().ToList();
+            p.NumberInStock = product.ProductVariants.Sum(x => x.Instock);
+            return View("ProductDetails", p);
         }
 
 

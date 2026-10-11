@@ -110,20 +110,28 @@ namespace E_Commerce.Models
             }
         }
 
-        public List<ProductVariant> GetProductById(int id)
+        public Product GetProductById(int id)
         {
-            var product = _Context.ProductVariant
-                                  .AsNoTracking()
-                                  .AsSplitQuery()
-                                  .Include(x => x.color)
-                                  .Include(x => x.size)
-                                  .Include(x => x.product)
-                                  .ThenInclude(x=>x.Category)
-                          .Where(x => x.ProductId == id)
-                          .ToList();
-            return product;
+            var product = _Context.Product
+                .AsSplitQuery()
+                .AsNoTracking()
+                .Include(p => p.Category)
+                .Include(p => p.ProductVariants)
+                    .ThenInclude(pv => pv.color)
+                .Include(p => p.ProductVariants)
+                    .ThenInclude(pv => pv.size)
+                .SingleOrDefault(p => p.Id == id);
 
+        
+            return product;
         }
+
+
+
+
+
+
+
 
     }
 }

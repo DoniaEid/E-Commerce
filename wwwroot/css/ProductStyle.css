@@ -162,8 +162,16 @@
     padding: 0;
     outline: none;
 }
- 
 
+.pd-no-variants {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 14px;
+}
 .shop-main-content {
     flex-grow: 1;
 }

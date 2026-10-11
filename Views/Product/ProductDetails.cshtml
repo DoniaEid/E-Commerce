@@ -6,7 +6,7 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/product-details.css" asp-append-version="true" />
 }
-@model List<ProductVariant>
+@model ProductViewModel
 <div class="pd-page">
     <div class="pd-breadcrumb">
         <a asp-controller="Home" asp-action="Index">Home</a><span>›</span>
@@ -43,35 +43,37 @@
 
         <div class="pd-info">
             <div class="pd-title-row">
-                <h3>@Model.First().product.Category.Name</h3>
-                @if(@Model.Sum(x=>x.Instock)>0){
-                   <span class="pd-stock">In Stock</span>
+                <h3>@Model.CategoryName</h3>
+                @if (Model.NumberInStock > 0)
+                {
+                    <span class="pd-stock in-stock">In Stock</span>
                 }
                 else
                 {
-                    <span class="pd-stock">Out Of Stock</span>
+                    <span class="pd-stock out-stock">Out Of Stock</span>
                 }
             </div>
-            <p class="pd-subtitle">@Model.First().product.Name</p>
+            <p class="pd-subtitle">@Model.Name</p>
 
             <div class="pd-rating">
                 <span class="pd-stars" aria-label="5 out of 5 stars">★★★★★</span>
                 <span class="pd-reviews">(121 Reviews)</span>
             </div>
 
-            <div class="pd-price"><span>$@Model.First().product.NewPrice</span><del>$@Model.First().product.OldPrice</del></div>
+            <div class="pd-price"><span>$@Model.NewPrice</span><del>$@Model.OldPrice</del></div>
 
             <p class="pd-description">
-                @Model.First().product.Description
+                @Model.Description
             </p>
+
+            @if (Model.colors.Any() && Model.sizes.Any()) {
 
             <div class="pd-option-group">
                 <h2>Color</h2>
                 <div class="pd-colors" role="group" aria-label="Choose a color">
-                    @{
-                        var Colors = Model
-                            .Select(x => x.color.Name)
-                            .Distinct();
+                        @{
+                            var Colors = Model.colors;
+
                         bool isFirstColor = true;
                     }
 
@@ -91,10 +93,9 @@
             <div class="pd-option-group">
                 <h2>Size</h2>
                 <div class="pd-sizes" role="group" aria-label="Choose a size">
-                    @{
-                        var Sizes = Model
-                            .Select(x => x.size.Name)
-                            .Distinct();
+                        @{
+                            var Sizes = Model.sizes;
+
                         bool isFirstSize = true;
                     }
                     @foreach (var size in Sizes)
@@ -107,8 +108,15 @@
                         isFirstSize = false;
                     }
                 </div>
+             
             </div>
-
+            }
+           else{    
+            
+                <div class="availability-message">
+                    No colors or sizes are currently available for this product.
+                </div>
+            }
             <div class="pd-actions">
                 <div class="pd-quantity" aria-label="Quantity selector">
                     <button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button>
