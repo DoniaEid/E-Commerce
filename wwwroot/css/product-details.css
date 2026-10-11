@@ -184,13 +184,22 @@
 }
 
 .in-stock {
-    background-color: #20C997;
-    color: #111;
+    background-color: #c8f7c5;
+    color: #267a26;
+    border-radius: 50px;
+    padding: 5px 14px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
 }
-
 .out-stock {
-    background-color: #FF1744; 
-    color: white;
+    background-color: red;
+    color:aliceblue;
+    border-radius: 40px;
+    padding: 6px 7px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
 }
 .pd-colors, .pd-sizes {
     display: flex;

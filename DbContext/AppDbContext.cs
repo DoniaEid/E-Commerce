@@ -12,6 +12,7 @@ namespace E_Commerce.DbContext
         public DbSet<Color> Color{ get; set; }
         public DbSet<Size> Size{ get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Review> Review { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
