@@ -70,11 +70,15 @@ namespace E_Commerce.Controllers
             p.OldPrice = product.OldPrice;
             p.NewPrice = product.NewPrice;
             p.Description = product.Description;
+            p.id = product.Id;
             p.CategoryName = product.Category.Name;
             p.ProductVariant = product.ProductVariants;
+
             p.colors = product.ProductVariants.Select(x => x.color.Name).Distinct().ToList();
             p.sizes = product.ProductVariants.Select(x => x.size.Name).Distinct().ToList();
+
             p.NumberInStock = product.ProductVariants.Sum(x => x.Instock);
+            p.Reviews = product.Reviews;
             return View("ProductDetails", p);
         }
 

@@ -9,7 +9,7 @@
         public decimal? OldPrice { get; set; }
 
         public string Description { get; set; }
-
+        public int id { get; set; }
         public string CategoryName { get; set; }
 
         public long NumberInStock { get; set; }
@@ -19,6 +19,8 @@
         public List<string> ?colors{get;set;}
 
         public List<string>? sizes { get; set; }
+
+        public List<Review>? Reviews { get; set; }
 
     }
 }

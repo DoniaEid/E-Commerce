@@ -1,5 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+
+<!DOCTYPE html>
+
 <html lang="en">
+
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,6 +29,11 @@
             <li><a asp-controller="Product" asp-action="Index">Shop <i class="fa-solid fa-chevron-down text-xs"></i></a></li>
             <li><a href="#">Our Story</a></li>
             <li><a href="#">Blog</a></li>
+            @if (User.FindFirstValue(ClaimTypes.Role)=="Admin")
+            {
+                <li><a href="#">Mama</a></li>
+
+           }
             <li><a href="#">Contact Us</a></li>
         </ul>
 

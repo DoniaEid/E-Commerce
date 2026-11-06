@@ -131,35 +131,106 @@
             <p class="pd-message" id="productMessage" aria-live="polite"></p>
         </div>
     </section>
+    ```cshtml
+    <div class="pd-tab-content" id="reviews" hidden>
 
-    <section class="pd-tabs-section">
-        <div class="pd-tabs" role="tablist">
-            <button type="button" class="pd-tab active" data-tab="description">Descriptions</button>
-            <button type="button" class="pd-tab" data-tab="information">Additional Information</button>
-            <button type="button" class="pd-tab" data-tab="reviews">Reviews</button>
+        <div class="reviews-layout">
+
+            <!-- Reviews List -->
+            <div class="reviews-list">
+                <h2>Customer Reviews</h2>
+                <p class="reviews-subtitle">
+                    See what customers think about this product.
+                </p>
+
+                @if (Model.Reviews != null && Model.Reviews.Any())
+                {
+                    @foreach (var item in Model.Reviews)
+                    {
+                        <div class="review-card">
+
+                            <div class="review-header">
+                                <div class="review-avatar">
+                                    <i class="fa-regular fa-user"></i>
+                                </div>
+
+                                <div class="review-user-info">
+                                    <h3>
+                                        @(item.user.UserName )
+                                    </h3>
+
+                                    <div class="review-stars">
+                                        @(new string('★', item.NumberStars))
+                                        @(new string('☆', 5 - item.NumberStars))
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p class="review-text">@item.review</p>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="empty-reviews">
+                        <i class="fa-regular fa-comment-dots"></i>
+                        <h3>No reviews yet</h3>
+                        <p>Be the first to share your experience!</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Add Review Form -->
+            <div class="review-form-wrapper">
+                <form asp-controller="Product"
+                      asp-action="AddReview"
+                      method="post"
+                      class="review-form">
+
+                    <h2>Write a Review</h2>
+                    <p>We'd love to hear your thoughts about this product.</p>
+
+                    <input type="hidden"
+                           name="productId"
+                           value="@Model.id" />
+
+                    <label for="review">Your Review</label>
+
+                    <textarea id="review"
+                              name="review"
+                              placeholder="Tell us about your experience..."
+                              required
+                              maxlength="1000"></textarea>
+
+                    <label for="numberStars">Your Rating</label>
+
+                    <select id="numberStars" name="numberStars" required>
+                        <option value="" disabled selected>
+                            Select your rating
+                        </option>
+                        <option value="5">★★★★★ — Excellent</option>
+                        <option value="4">★★★★☆ — Very Good</option>
+                        <option value="3">★★★☆☆ — Good</option>
+                        <option value="2">★★☆☆☆ — Fair</option>
+                        <option value="1">★☆☆☆☆ — Poor</option>
+                    </select>
+
+                    <button type="submit">
+                        Submit Review
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                </form>
+            </div>
+
         </div>
-        <div class="pd-tab-content" id="description">
-            <p>
-                It is a long established fact that a reader will be distracted by the readable content
-                of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using 'Content here, content here',
-                making it look like readable English. Many desktop publishing packages and web page editors
-                now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover
-                many web sites still in their infancy.
-            </p>
-            <p>Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</p>
-        </div>
-        <div class="pd-tab-content" id="information" hidden>
-            <p><strong>Material:</strong> Polyester blend</p>
-            <p><strong>Care:</strong> Hand wash gently; do not bleach.</p>
-            <p><strong>Fit:</strong> Regular fit</p>
-        </div>
-        <div class="pd-tab-content" id="reviews" hidden>
-            <p><strong>Customer reviews</strong> — 5.0 out of 5 based on 121 reviews.</p>
-            <p>“Beautiful quality and lovely details.”</p>
-        </div>
+    </div>
+    
+
     </section>
 
+    
     <section class="pd-related">
         <h2>Related Products</h2>
         <div class="pd-related-grid">

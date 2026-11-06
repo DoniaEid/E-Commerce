@@ -120,6 +120,8 @@ namespace E_Commerce.Models
                     .ThenInclude(pv => pv.color)
                 .Include(p => p.ProductVariants)
                     .ThenInclude(pv => pv.size)
+                .Include(p=>p.Reviews)
+                .ThenInclude(u=>u.user)
                 .SingleOrDefault(p => p.Id == id);
 
         

@@ -90,6 +90,53 @@ namespace E_Commerce.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("E_Commerce.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Cart");
+                });
+
+            modelBuilder.Entity("E_Commerce.Models.CartItems", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("E_Commerce.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -371,6 +418,34 @@ namespace E_Commerce.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("E_Commerce.Models.Cart", b =>
+                {
+                    b.HasOne("E_Commerce.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("E_Commerce.Models.CartItems", b =>
+                {
+                    b.HasOne("E_Commerce.Models.Cart", "cart")
+                        .WithMany("cartItems")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Commerce.Models.Product", "product")
+                        .WithMany("cartItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("cart");
+
+                    b.Navigation("product");
+                });
+
             modelBuilder.Entity("E_Commerce.Models.Product", b =>
                 {
                     b.HasOne("E_Commerce.Models.Category", "Category")
@@ -483,6 +558,11 @@ namespace E_Commerce.Migrations
                     b.Navigation("Reviews");
                 });
 
+            modelBuilder.Entity("E_Commerce.Models.Cart", b =>
+                {
+                    b.Navigation("cartItems");
+                });
+
             modelBuilder.Entity("E_Commerce.Models.Category", b =>
                 {
                     b.Navigation("Products");
@@ -498,6 +578,8 @@ namespace E_Commerce.Migrations
                     b.Navigation("ProductVariants");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("cartItems");
                 });
 
             modelBuilder.Entity("E_Commerce.Models.Size", b =>

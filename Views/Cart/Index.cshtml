@@ -1,0 +1,215 @@
+﻿@{
+    ViewData["Title"] = "Shopping Cart";
+    Layout = "_Layout";
+
+    var dummyCartItems = new List<CartItemModel>
+    {
+        new CartItemModel
+        {
+            Id = 1,
+            ProductName = "Girls Pink Moana Printed Dress",
+            Size = "S",
+            Color = "Pink",
+            Price = 80.00m,
+            Quantity = 1,
+            ImageUrl = "https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=200&q=80"
+        },
+        new CartItemModel
+        {
+            Id = 2,
+            ProductName = "Women Textured Handheld Bag",
+            Size = "Regular",
+            Color = "Black",
+            Price = 80.00m,
+            Quantity = 1,
+            ImageUrl = "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=200&q=80"
+        },
+        new CartItemModel
+        {
+            Id = 3,
+            ProductName = "Tailored Cotton Casual Shirt",
+            Size = "M",
+            Color = "Blue",
+            Price = 40.00m,
+            Quantity = 1,
+            ImageUrl = "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=200&q=80"
+        }
+    };
+
+    decimal deliveryCharge = 5.00m;
+    decimal subtotal = dummyCartItems.Sum(x => x.Price * x.Quantity);
+    decimal grandTotal = subtotal + deliveryCharge;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/CartStyle.css" asp-append-version="true" />
+}
+
+<div class="cart-page">
+    <!-- Breadcrumb -->
+    <div class="cart-breadcrumb">
+        <a asp-controller="Home" asp-action="Index">Home</a><span>›</span>
+        <span>Cart</span>
+    </div>
+
+    <h1 class="cart-title">Shopping Cart</h1>
+
+    <div class="cart-container">
+        <!-- Products Table Section -->
+        <div class="cart-products-section">
+            <div class="cart-table-header">
+                <span class="col-product">Products</span>
+                <span class="col-price">Price</span>
+                <span class="col-qty">Quantity</span>
+                <span class="col-subtotal">Subtotal</span>
+            </div>
+
+            @if (dummyCartItems.Any())
+            {
+                <div class="cart-items-list">
+                    @foreach (var item in dummyCartItems)
+                    {
+                        <div class="cart-item-row" data-id="@item.Id">
+                            <!-- Product Info -->
+                            <div class="cart-item-info col-product">
+                                <img src="@item.ImageUrl" alt="@item.ProductName" class="cart-item-img" />
+                                <div>
+                                    <h3>@item.ProductName</h3>
+                                    <p class="cart-item-meta">Size: @item.Size</p>
+                                    @if (!string.IsNullOrEmpty(item.Color))
+                                    {
+                                        <p class="cart-item-meta">Color: @item.Color</p>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="cart-item-price col-price">
+                                $@item.Price.ToString("0.00")
+                            </div>
+
+                            <!-- Quantity Selector -->
+                            <div class="cart-item-qty col-qty">
+                                <div class="pd-quantity" aria-label="Quantity selector">
+                                    <button type="button" class="qty-minus" aria-label="Decrease quantity">−</button>
+                                    <span class="qty-value">@item.Quantity</span>
+                                    <button type="button" class="qty-plus" aria-label="Increase quantity">+</button>
+                                </div>
+                            </div>
+
+                            <!-- Subtotal -->
+                            <div class="cart-item-subtotal col-subtotal">
+                                $@((item.Price * item.Quantity).ToString("0.00"))
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="empty-cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you haven't added anything to your cart yet.</p>
+                </div>
+            }
+        </div>
+
+        <!-- Cart Summary / Checkout Section -->
+        <div class="cart-summary-section">
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span class="summary-subtotal-price">$@subtotal.ToString("0.00")</span>
+                </div>
+
+                <!-- Discount Code Box -->
+                <div class="discount-box">
+                    <label for="discountCode">Enter Discount Code</label>
+                    <div class="discount-input-group">
+                        <input type="text" id="discountCode" placeholder="FLAT50" />
+                        <button type="button" id="applyDiscountBtn">Apply</button>
+                    </div>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery Charge</span>
+                    <span class="summary-shipping">$@deliveryCharge.ToString("0.00")</span>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-row grand-total">
+                    <span>Grand Total</span>
+                    <span class="summary-grand-total-price">$@grandTotal.ToString("0.00")</span>
+                </div>
+
+                <button type="button" class="btn-proceed-checkout">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- تعريف الـ Model المحلي ليعمل الكود بدون أخطاء داخل الصفحة -->
+@functions {
+    public class CartItemModel
+    {
+        public int Id { get; set; }
+        public string ProductName { get; set; }
+        public string Size { get; set; }
+        public string Color { get; set; }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+        public string ImageUrl { get; set; }
+    }
+}
+
+@section Scripts {
+    <script>
+        // كود الجافاسكريبت لتحديث الأسعار والكميات عند الضغط على الأزرار
+        document.querySelectorAll(".cart-item-row").forEach(row => {
+            const minusBtn = row.querySelector(".qty-minus");
+            const plusBtn = row.querySelector(".qty-plus");
+            const qtySpan = row.querySelector(".qty-value");
+            const priceElem = row.querySelector(".cart-item-price");
+            const subtotalElem = row.querySelector(".cart-item-subtotal");
+
+            let quantity = parseInt(qtySpan.textContent);
+            const unitPrice = parseFloat(priceElem.textContent.replace('$', ''));
+
+            minusBtn.addEventListener("click", () => {
+                if (quantity > 1) {
+                    quantity--;
+                    qtySpan.textContent = quantity;
+                    updateSubtotal();
+                }
+            });
+
+            plusBtn.addEventListener("click", () => {
+                quantity++;
+                qtySpan.textContent = quantity;
+                updateSubtotal();
+            });
+
+            function updateSubtotal() {
+                const newSubtotal = (unitPrice * quantity).toFixed(2);
+                subtotalElem.textContent = `$${newSubtotal}`;
+                calculateGrandTotal();
+            }
+        });
+
+        function calculateGrandTotal() {
+            let subtotal = 0;
+            document.querySelectorAll(".cart-item-subtotal").forEach(el => {
+                subtotal += parseFloat(el.textContent.replace('$', ''));
+            });
+
+            const summarySubtotal = document.querySelector(".summary-subtotal-price");
+            const summaryGrandTotal = document.querySelector(".summary-grand-total-price");
+            const shipping = parseFloat(document.querySelector(".summary-shipping").textContent.replace('$', '')) || 5.00;
+
+            if (summarySubtotal) summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            if (summaryGrandTotal) summaryGrandTotal.textContent = `$${(subtotal + shipping).toFixed(2)}`;
+        }
+    </script>
+}

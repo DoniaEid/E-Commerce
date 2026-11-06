@@ -22,5 +22,8 @@
         public List<ProductVariant> ProductVariants { get; set; }
 
         public List<Review> Reviews { get; set; }
+
+        public List<CartItems> cartItems { get; set; }
+
     }
 }

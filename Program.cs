@@ -7,7 +7,7 @@ namespace E_Commerce
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,10 +28,24 @@ namespace E_Commerce
 
 
             builder.Services.AddScoped<ProductBL>();
-
+            builder.Services.AddScoped<CreateAdmin>();
 
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var c = scope.ServiceProvider
+                    .GetRequiredService<CreateAdmin>();
+
+                ApplicationUser u = new ApplicationUser
+                {
+                    UserName = "DoniaEid",
+                    Email = "doniaeid815@gmail.com"
+                };
+
+                await c.CreateAdmintoapplication(u, "1234");
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

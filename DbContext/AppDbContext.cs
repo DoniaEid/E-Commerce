@@ -13,6 +13,8 @@ namespace E_Commerce.DbContext
         public DbSet<Size> Size{ get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Review> Review { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<CartItems> CartItems { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
