@@ -40,12 +40,6 @@
 
 /* Product Layout */
 
-.pd-product {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: 40px;
-    align-items: start;
-}
 
 .pd-gallery,
 .pd-info {
@@ -740,4 +734,32 @@
         font-size: 21px;
     }
 }
+.pd-product {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
+    gap: 35px;
+    align-items: start;
+}
+.product-main-image-container {
+    width: 100%;
+    max-width: 850px;
+    height: 550px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    background: #fff;
+}
 
+.main-product-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    transform: none;
+}
+
+.product-main-image-container:hover .main-product-image {
+    transform: scale(1.03);
+}

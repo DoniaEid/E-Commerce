@@ -1,5 +1,6 @@
 ﻿using E_Commerce.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace E_Commerce.Controllers
 {
@@ -66,6 +67,7 @@ namespace E_Commerce.Controllers
         {
             var product= ProductBL.GetProductById(id);
             ProductViewModel p = new ProductViewModel();
+            p.ImageUrl = product.ImageUrl;
             p.Name = product.Name;
             p.OldPrice = product.OldPrice;
             p.NewPrice = product.NewPrice;
@@ -81,6 +83,9 @@ namespace E_Commerce.Controllers
             p.Reviews = product.Reviews;
             return View("ProductDetails", p);
         }
+
+
+       
 
 
     }

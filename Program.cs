@@ -29,6 +29,7 @@ namespace E_Commerce
 
             builder.Services.AddScoped<ProductBL>();
             builder.Services.AddScoped<CreateAdmin>();
+            builder.Services.AddScoped<CartBL>();
 
 
             var app = builder.Build();

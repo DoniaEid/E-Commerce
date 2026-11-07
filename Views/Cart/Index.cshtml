@@ -1,215 +1,240 @@
-﻿@{
-    ViewData["Title"] = "Shopping Cart";
-    Layout = "_Layout";
+﻿@model IEnumerable<E_Commerce.Models.CartDetailsViewModel>
+@using System.Globalization
 
-    var dummyCartItems = new List<CartItemModel>
-    {
-        new CartItemModel
-        {
-            Id = 1,
-            ProductName = "Girls Pink Moana Printed Dress",
-            Size = "S",
-            Color = "Pink",
-            Price = 80.00m,
-            Quantity = 1,
-            ImageUrl = "https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=200&q=80"
-        },
-        new CartItemModel
-        {
-            Id = 2,
-            ProductName = "Women Textured Handheld Bag",
-            Size = "Regular",
-            Color = "Black",
-            Price = 80.00m,
-            Quantity = 1,
-            ImageUrl = "https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=200&q=80"
-        },
-        new CartItemModel
-        {
-            Id = 3,
-            ProductName = "Tailored Cotton Casual Shirt",
-            Size = "M",
-            Color = "Blue",
-            Price = 40.00m,
-            Quantity = 1,
-            ImageUrl = "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=200&q=80"
-        }
-    };
+@{
+    ViewData["Title"] = "Checkout";
 
+    var egyptCulture = CultureInfo.GetCultureInfo("en-EG");
+
+    decimal subtotal = Model.Sum(m => m.Totalprice ?? 0);
     decimal deliveryCharge = 5.00m;
-    decimal subtotal = dummyCartItems.Sum(x => x.Price * x.Quantity);
     decimal grandTotal = subtotal + deliveryCharge;
+
+    var groups = Model
+        .GroupBy(m => new { m.ProductName, m.ImageUrl })
+        .ToList();
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/CartStyle.css" asp-append-version="true" />
 }
 
-<div class="cart-page">
-    <!-- Breadcrumb -->
-    <div class="cart-breadcrumb">
-        <a asp-controller="Home" asp-action="Index">Home</a><span>›</span>
-        <span>Cart</span>
-    </div>
+<div class="container checkout-container">
 
-    <h1 class="cart-title">Shopping Cart</h1>
-
-    <div class="cart-container">
-        <!-- Products Table Section -->
-        <div class="cart-products-section">
-            <div class="cart-table-header">
-                <span class="col-product">Products</span>
-                <span class="col-price">Price</span>
-                <span class="col-qty">Quantity</span>
-                <span class="col-subtotal">Subtotal</span>
-            </div>
-
-            @if (dummyCartItems.Any())
-            {
-                <div class="cart-items-list">
-                    @foreach (var item in dummyCartItems)
-                    {
-                        <div class="cart-item-row" data-id="@item.Id">
-                            <!-- Product Info -->
-                            <div class="cart-item-info col-product">
-                                <img src="@item.ImageUrl" alt="@item.ProductName" class="cart-item-img" />
-                                <div>
-                                    <h3>@item.ProductName</h3>
-                                    <p class="cart-item-meta">Size: @item.Size</p>
-                                    @if (!string.IsNullOrEmpty(item.Color))
-                                    {
-                                        <p class="cart-item-meta">Color: @item.Color</p>
-                                    }
-                                </div>
-                            </div>
-
-                            <!-- Price -->
-                            <div class="cart-item-price col-price">
-                                $@item.Price.ToString("0.00")
-                            </div>
-
-                            <!-- Quantity Selector -->
-                            <div class="cart-item-qty col-qty">
-                                <div class="pd-quantity" aria-label="Quantity selector">
-                                    <button type="button" class="qty-minus" aria-label="Decrease quantity">−</button>
-                                    <span class="qty-value">@item.Quantity</span>
-                                    <button type="button" class="qty-plus" aria-label="Increase quantity">+</button>
-                                </div>
-                            </div>
-
-                            <!-- Subtotal -->
-                            <div class="cart-item-subtotal col-subtotal">
-                                $@((item.Price * item.Quantity).ToString("0.00"))
-                            </div>
-                        </div>
-                    }
-                </div>
-            }
-            else
-            {
-                <div class="empty-cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <h3>Your cart is empty</h3>
-                    <p>Looks like you haven't added anything to your cart yet.</p>
-                </div>
-            }
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="checkout-title mb-1">Checkout</h2>
+            <p class="text-muted">
+                Review your items before placing your order.
+            </p>
         </div>
 
-        <!-- Cart Summary / Checkout Section -->
-        <div class="cart-summary-section">
+        <span class="text-muted fw-semibold">
+            <i class="bi bi-bag"></i>
+            <span id="itemsCount">@Model.Sum(m => m.Quantity)</span> Items
+        </span>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Products -->
+        <div class="col-lg-8">
+
+            <div class="checkout-card">
+
+                <h5>Your Shopping Bag</h5>
+
+                @foreach (var group in groups)
+                {
+                    decimal groupTotal = group.Sum(x => x.Totalprice ?? 0);
+
+                    <div class="product-group">
+
+                        <img src="/Images/@group.Key.ImageUrl"
+                             alt="@group.Key.ProductName"
+                             class="product-img" />
+
+                        <div class="pg-body">
+
+                            <div class="pg-header">
+                                <div class="product-name">@group.Key.ProductName</div>
+
+                                <div class="pg-total">
+                                    <small>Product total</small>
+                                    <strong class="group-total">@groupTotal.ToString("#,0.##", egyptCulture) EGP</strong>
+                                </div>
+                            </div>
+
+                            @foreach (var item in group)
+                            {
+                                decimal unitPrice = item.Quantity > 0
+                                    ? (item.Totalprice ?? 0) / item.Quantity
+                                    : 0;
+
+                                <div class="variant"
+                                     data-unit-price="@unitPrice.ToString(CultureInfo.InvariantCulture)">
+
+                                    <div class="variant-info">
+                                        <span class="chip chip-size">@item.size</span>
+
+                                        <span class="chip">
+                                            <span class="color-dot"
+                                                  style="background-color:@item.color"></span>
+                                            @item.color
+                                        </span>
+                                    </div>
+
+                                    <div class="variant-price">
+                                        @unitPrice.ToString("#,0.##", egyptCulture) EGP
+                                    </div>
+
+                                    <div class="variant-qty">
+                                        <div class="quantity-box"
+                                             data-product="@item.ProductName"
+                                             data-size="@item.size"
+                                             data-color="@item.color">
+
+                                            <button type="button" class="quantity-btn"
+                                                    onclick="ChangeQuantityProduct(this, -1)">
+                                                −
+                                            </button>
+
+                                            <span class="quantity-number">@item.Quantity</span>
+
+                                            <button type="button" class="quantity-btn"
+                                                    onclick="ChangeQuantityProduct(this, 1)">
+                                                +
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="variant-total">
+                                        @((item.Totalprice ?? 0).ToString("#,0.##", egyptCulture)) EGP
+                                    </div>
+                                    <form asp-controller="Cart" asp-action="DeleteItemInCart" method="get" class="variant-delete">
+
+                                        <input type="hidden" name="ProductName" value="@item.ProductName" />
+                                        <input type="hidden" name="Size" value="@item.size" />
+                                        <input type="hidden" name="Color" value="@item.color" />
+
+                                        <button type="submit" class="delete-btn" title="Remove">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+
+                                    </form>
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        <!-- Order Summary -->
+        <div class="col-lg-4">
+
             <div class="summary-card">
+
+                <h5 class="summary-title">Order Summary</h5>
+
                 <div class="summary-row">
                     <span>Subtotal</span>
-                    <span class="summary-subtotal-price">$@subtotal.ToString("0.00")</span>
+                    <strong id="subtotal">@subtotal.ToString("#,0.##", egyptCulture) EGP</strong>
                 </div>
 
-                <!-- Discount Code Box -->
-                <div class="discount-box">
-                    <label for="discountCode">Enter Discount Code</label>
-                    <div class="discount-input-group">
-                        <input type="text" id="discountCode" placeholder="FLAT50" />
-                        <button type="button" id="applyDiscountBtn">Apply</button>
+                <div class="mb-4">
+                    <label class="form-label">Discount Code</label>
+
+                    <div class="input-group">
+                        <input type="text"
+                               class="form-control discount-input"
+                               placeholder="Enter code" />
+
+                        <button class="btn discount-btn" type="button">Apply</button>
                     </div>
                 </div>
 
                 <div class="summary-row">
                     <span>Delivery Charge</span>
-                    <span class="summary-shipping">$@deliveryCharge.ToString("0.00")</span>
+                    <strong>@deliveryCharge.ToString("#,0.##", egyptCulture) EGP</strong>
                 </div>
 
-                <div class="summary-divider"></div>
+                <hr class="my-4" />
 
-                <div class="summary-row grand-total">
-                    <span>Grand Total</span>
-                    <span class="summary-grand-total-price">$@grandTotal.ToString("0.00")</span>
+                <div class="d-flex justify-content-between align-items-center mb-4 gap-2">
+                    <span class="summary-total">Grand Total</span>
+                    <span class="summary-total-price"
+                          id="grandTotal"
+                          data-delivery="@deliveryCharge.ToString(CultureInfo.InvariantCulture)">
+                        @grandTotal.ToString("#,0.##", egyptCulture) EGP
+                    </span>
                 </div>
 
-                <button type="button" class="btn-proceed-checkout">Proceed to Checkout</button>
+                <button class="checkout-btn" type="button">
+                    Proceed to Checkout
+                    <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+
+                <div class="text-center mt-3">
+                    <span class="secure-label">
+                        <i class="bi bi-shield-check"></i>
+                        Secure Checkout
+                    </span>
+                </div>
+
             </div>
-        </div>
-    </div>
-</div>
 
-<!-- تعريف الـ Model المحلي ليعمل الكود بدون أخطاء داخل الصفحة -->
-@functions {
-    public class CartItemModel
-    {
-        public int Id { get; set; }
-        public string ProductName { get; set; }
-        public string Size { get; set; }
-        public string Color { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
-        public string ImageUrl { get; set; }
-    }
-}
+        </div>
+
+    </div>
+
+</div>
 
 @section Scripts {
     <script>
-        // كود الجافاسكريبت لتحديث الأسعار والكميات عند الضغط على الأزرار
-        document.querySelectorAll(".cart-item-row").forEach(row => {
-            const minusBtn = row.querySelector(".qty-minus");
-            const plusBtn = row.querySelector(".qty-plus");
-            const qtySpan = row.querySelector(".qty-value");
-            const priceElem = row.querySelector(".cart-item-price");
-            const subtotalElem = row.querySelector(".cart-item-subtotal");
-
-            let quantity = parseInt(qtySpan.textContent);
-            const unitPrice = parseFloat(priceElem.textContent.replace('$', ''));
-
-            minusBtn.addEventListener("click", () => {
-                if (quantity > 1) {
-                    quantity--;
-                    qtySpan.textContent = quantity;
-                    updateSubtotal();
-                }
-            });
-
-            plusBtn.addEventListener("click", () => {
-                quantity++;
-                qtySpan.textContent = quantity;
-                updateSubtotal();
-            });
-
-            function updateSubtotal() {
-                const newSubtotal = (unitPrice * quantity).toFixed(2);
-                subtotalElem.textContent = `$${newSubtotal}`;
-                calculateGrandTotal();
-            }
-        });
-
-        function calculateGrandTotal() {
-            let subtotal = 0;
-            document.querySelectorAll(".cart-item-subtotal").forEach(el => {
-                subtotal += parseFloat(el.textContent.replace('$', ''));
-            });
-
-            const summarySubtotal = document.querySelector(".summary-subtotal-price");
-            const summaryGrandTotal = document.querySelector(".summary-grand-total-price");
-            const shipping = parseFloat(document.querySelector(".summary-shipping").textContent.replace('$', '')) || 5.00;
-
-            if (summarySubtotal) summarySubtotal.textContent = `$${subtotal.toFixed(2)}`;
-            if (summaryGrandTotal) summaryGrandTotal.textContent = `$${(subtotal + shipping).toFixed(2)}`;
+        function fmt(n) {
+            return n.toLocaleString('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }) + ' EGP';
         }
+
+        function recalcTotals() {
+            let subtotal = 0;
+            let items = 0;
+
+            document.querySelectorAll('.product-group').forEach(group => {
+                let groupTotal = 0;
+
+                group.querySelectorAll('.variant').forEach(v => {
+                    const unit  = parseFloat(v.dataset.unitPrice);
+                    const qty   = parseInt(v.querySelector('.quantity-number').textContent, 10);
+                    const total = unit * qty;
+
+                    v.querySelector('.variant-total').textContent = fmt(total);
+                    groupTotal += total;
+                    items += qty;
+                });
+
+                group.querySelector('.group-total').textContent = fmt(groupTotal);
+                subtotal += groupTotal;
+            });
+
+            const grand    = document.getElementById('grandTotal');
+            const delivery = parseFloat(grand.dataset.delivery);
+
+            document.getElementById('subtotal').textContent   = fmt(subtotal);
+            grand.textContent                                 = fmt(subtotal + delivery);
+            document.getElementById('itemsCount').textContent = items;
+        }
+
+      
+
+
     </script>
 }

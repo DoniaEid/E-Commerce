@@ -14,6 +14,8 @@
 
         public long NumberInStock { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public List<ProductVariant>? ProductVariant { get; set; }
 
         public List<string> ?colors{get;set;}

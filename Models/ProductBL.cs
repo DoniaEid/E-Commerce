@@ -113,18 +113,12 @@ namespace E_Commerce.Models
         public Product GetProductById(int id)
         {
             var product = _Context.Product
-                .AsSplitQuery()
-                .AsNoTracking()
-                .Include(p => p.Category)
-                .Include(p => p.ProductVariants)
-                    .ThenInclude(pv => pv.color)
-                .Include(p => p.ProductVariants)
-                    .ThenInclude(pv => pv.size)
-                .Include(p=>p.Reviews)
-                .ThenInclude(u=>u.user)
-                .SingleOrDefault(p => p.Id == id);
-
-        
+                                  .Include(x => x.Category)
+                                  .Include(x => x.ProductVariants)
+                                  .ThenInclude(y => y.color)
+                                  .Include(x => x.ProductVariants)
+                                  .ThenInclude(y => y.size)
+                                  .SingleOrDefault(x => x.Id == id);
             return product;
         }
 

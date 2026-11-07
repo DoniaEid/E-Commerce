@@ -3,47 +3,85 @@
     Layout = "_Layout";
 }
 
+@model ProductViewModel
+
 @section Styles {
     <link rel="stylesheet" href="~/css/product-details.css" asp-append-version="true" />
 }
-@model ProductViewModel
+
 <div class="pd-page">
+
+    <!-- Breadcrumb -->
     <div class="pd-breadcrumb">
-        <a asp-controller="Home" asp-action="Index">Home</a><span>›</span>
-        <a asp-controller="Product" asp-action="Index">Shop</a><span>›</span>
-        <span>Women Textured Handheld Bag</span>
+        <a asp-controller="Home" asp-action="Index">Home</a>
+        <span>›</span>
+        <a asp-controller="Product" asp-action="Index">Shop</a>
+        <span>›</span>
+        <span>@Model.Name</span>
     </div>
 
+    <!-- Product Details -->
     <section class="pd-product">
+
+        <!-- Product Gallery -->
         <div class="pd-gallery">
-            <div class="pd-main-image">
+            <div class="product-main-image-container">
+
                 <img id="mainProductImage"
-                     src="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=900&q=85"
-                     alt="Product image" />
+                     src="/Images/@Model.ImageUrl"
+                     alt="@Model.Name"
+                     class="main-product-image" />
+
+                <span class="image-zoom-hint">
+                    <i class="bi bi-zoom-in"></i> Hover to Zoom
+                </span>
+
             </div>
+
             <div class="pd-thumbnails">
-                <button class="pd-thumb active" type="button" aria-label="View product image 1"
+
+                <button class="pd-thumb active"
+                        type="button"
+                        aria-label="View product image 1"
                         data-image="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=900&q=85">
-                    <img src="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=200&q=80" alt="" />
+                    <img src="https://images.unsplash.com/photo-1599255068390-206e0d068a6b?auto=format&fit=crop&w=200&q=80"
+                         alt="" />
                 </button>
-                <button class="pd-thumb" type="button" aria-label="View product image 2"
+
+                <button class="pd-thumb"
+                        type="button"
+                        aria-label="View product image 2"
                         data-image="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=900&q=85">
-                    <img src="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=200&q=80" alt="" />
+                    <img src="https://images.unsplash.com/photo-1591369822096-ffd140ec948f?auto=format&fit=crop&w=200&q=80"
+                         alt="" />
                 </button>
-                <button class="pd-thumb" type="button" aria-label="View product image 3"
+
+                <button class="pd-thumb"
+                        type="button"
+                        aria-label="View product image 3"
                         data-image="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=900&q=85">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=200&q=80" alt="" />
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=200&q=80"
+                         alt="" />
                 </button>
-                <button class="pd-thumb" type="button" aria-label="View product image 4"
+
+                <button class="pd-thumb"
+                        type="button"
+                        aria-label="View product image 4"
                         data-image="https://images.unsplash.com/photo-1583743814966-8936f37f4678?auto=format&fit=crop&w=900&q=85">
-                    <img src="https://images.unsplash.com/photo-1583743814966-8936f37f4678?auto=format&fit=crop&w=200&q=80" alt="" />
+                    <img src="https://images.unsplash.com/photo-1583743814966-8936f37f4678?auto=format&fit=crop&w=200&q=80"
+                         alt="" />
                 </button>
+
             </div>
         </div>
 
+        <!-- Product Information -->
         <div class="pd-info">
+
             <div class="pd-title-row">
+
                 <h3>@Model.CategoryName</h3>
+
                 @if (Model.NumberInStock > 0)
                 {
                     <span class="pd-stock in-stock">In Stock</span>
@@ -52,93 +90,160 @@
                 {
                     <span class="pd-stock out-stock">Out Of Stock</span>
                 }
+
             </div>
+
             <p class="pd-subtitle">@Model.Name</p>
 
             <div class="pd-rating">
-                <span class="pd-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                <span class="pd-stars" aria-label="5 out of 5 stars">
+                    ★★★★★
+                </span>
                 <span class="pd-reviews">(121 Reviews)</span>
             </div>
 
-            <div class="pd-price"><span>$@Model.NewPrice</span><del>$@Model.OldPrice</del></div>
+            <div class="pd-price">
+                <span>$@Model.NewPrice</span>
+                <del>$@Model.OldPrice</del>
+            </div>
 
             <p class="pd-description">
                 @Model.Description
             </p>
 
-            @if (Model.colors.Any() && Model.sizes.Any()) {
+            <!-- Add To Cart Form -->
+            @if (Model.NumberInStock > 0)
+            {
+                <form asp-controller="Cart"
+                      asp-action="AddToCart"
+                      method="post"
+                      id="cartForm">
 
-            <div class="pd-option-group">
-                <h2>Color</h2>
-                <div class="pd-colors" role="group" aria-label="Choose a color">
-                        @{
-                            var Colors = Model.colors;
+                    <input type="hidden"
+                           name="ProductName"
+                           value="@Model.Name" />
 
-                        bool isFirstColor = true;
-                    }
+                    <input type="hidden"
+                           name="Color"
+                           id="SelectedColor" />
 
-                   @foreach (var color in Colors)
+                    <input type="hidden"
+                           name="Size"
+                           id="SelectedSize" />
+
+                    <input type="hidden"
+                           name="Quantity"
+                           id="Quantity"
+                           value="1" />
+
+                    <!-- Color -->
+                    @if (Model.colors != null && Model.colors.Any())
                     {
-                        <button type="button"
-                                class="pd-color @(isFirstColor ? "selected" : "")"
-                                style="--swatch: @color; background-color: @color;" 
-                                aria-label="@color"
-                                onclick="selectOption(this, '.pd-color')">
-                        </button>
-                        isFirstColor = false;
-                    }
-                </div>
-            </div>
+                        <div class="pd-option-group">
 
-            <div class="pd-option-group">
-                <h2>Size</h2>
-                <div class="pd-sizes" role="group" aria-label="Choose a size">
-                        @{
-                            var Sizes = Model.sizes;
+                            <h2>Color</h2>
 
-                        bool isFirstSize = true;
+                            <div class="pd-colors">
+
+                                @foreach (var color in Model.colors)
+                                {
+                                    <button type="button"
+                                            class="pd-color"
+                                            data-value="@color"
+                                            style="background-color: @color;"
+                                            onclick="selectOption(this, '.pd-color', 'SelectedColor')">
+                                    </button>
+                                }
+
+                            </div>
+
+                        </div>
                     }
-                    @foreach (var size in Sizes)
+
+                    <!-- Size -->
+                    @if (Model.sizes != null && Model.sizes.Any())
                     {
-                        <button type="button"
-                                class="pd-size @(isFirstSize ? "selected" : "")"
-                                onclick="selectOption(this, '.pd-size')">
-                            @size
-                        </button>
-                        isFirstSize = false;
+                        <div class="pd-option-group">
+
+                            <h2>Size</h2>
+
+                            <div class="pd-sizes">
+
+                                @foreach (var size in Model.sizes)
+                                {
+                                    <button type="button"
+                                            class="pd-size"
+                                            data-value="@size"
+                                            onclick="selectOption(this, '.pd-size', 'SelectedSize')">
+                                        @size
+                                    </button>
+                                }
+
+                            </div>
+
+                        </div>
                     }
-                </div>
-             
-            </div>
+
+                    <!-- Quantity and Buttons -->
+                    <div class="pd-actions">
+
+                        <div class="pd-quantity">
+
+                            <button type="button"
+                                    id="qtyMinus"
+                                    aria-label="Decrease quantity">
+                                −
+                            </button>
+
+                            <span id="qtyValue">1</span>
+
+                            <button type="button"
+                                    id="qtyPlus"
+                                    aria-label="Increase quantity">
+                                +
+                            </button>
+
+                        </div>
+
+                        <button type="submit" class="pd-add-cart">
+                            Add to Cart
+                        </button>
+
+                        <button type="button"
+                                class="pd-wishlist"
+                                id="wishlistButton"
+                                aria-label="Add to wishlist">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+
+                    </div>
+
+                </form>
             }
-           else{    
-            
+            else
+            {
                 <div class="availability-message">
-                    No colors or sizes are currently available for this product.
+                    This product is currently out of stock.
                 </div>
             }
-            <div class="pd-actions">
-                <div class="pd-quantity" aria-label="Quantity selector">
-                    <button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button>
-                    <span id="qtyValue">1</span>
-                    <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
-                </div>
-                <button type="button" class="pd-add-cart" id="addToCart">Add to Cart</button>
-                <button type="button" class="pd-wishlist" id="wishlistButton" aria-label="Add to wishlist">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
-            </div>
+
             <p class="pd-message" id="productMessage" aria-live="polite"></p>
+
         </div>
+
     </section>
-    ```cshtml
-    <div class="pd-tab-content" id="reviews" hidden>
+
+
+    <!-- Customer Reviews -->
+    <section class="pd-tab-content" id="reviews">
 
         <div class="reviews-layout">
 
             <!-- Reviews List -->
             <div class="reviews-list">
+
                 <h2>Customer Reviews</h2>
+
                 <p class="reviews-subtitle">
                     See what customers think about this product.
                 </p>
@@ -150,23 +255,29 @@
                         <div class="review-card">
 
                             <div class="review-header">
+
                                 <div class="review-avatar">
                                     <i class="fa-regular fa-user"></i>
                                 </div>
 
                                 <div class="review-user-info">
+
                                     <h3>
-                                        @(item.user.UserName )
+                                        @(item.user?.UserName ?? "Customer")
                                     </h3>
 
                                     <div class="review-stars">
                                         @(new string('★', item.NumberStars))
                                         @(new string('☆', 5 - item.NumberStars))
                                     </div>
+
                                 </div>
+
                             </div>
 
-                            <p class="review-text">@item.review</p>
+                            <p class="review-text">
+                                @item.review
+                            </p>
 
                         </div>
                     }
@@ -174,22 +285,31 @@
                 else
                 {
                     <div class="empty-reviews">
+
                         <i class="fa-regular fa-comment-dots"></i>
+
                         <h3>No reviews yet</h3>
+
                         <p>Be the first to share your experience!</p>
+
                     </div>
                 }
+
             </div>
 
             <!-- Add Review Form -->
             <div class="review-form-wrapper">
+
                 <form asp-controller="Product"
                       asp-action="AddReview"
                       method="post"
                       class="review-form">
 
                     <h2>Write a Review</h2>
-                    <p>We'd love to hear your thoughts about this product.</p>
+
+                    <p>
+                        We'd love to hear your thoughts about this product.
+                    </p>
 
                     <input type="hidden"
                            name="productId"
@@ -205,15 +325,20 @@
 
                     <label for="numberStars">Your Rating</label>
 
-                    <select id="numberStars" name="numberStars" required>
+                    <select id="numberStars"
+                            name="numberStars"
+                            required>
+
                         <option value="" disabled selected>
                             Select your rating
                         </option>
+
                         <option value="5">★★★★★ — Excellent</option>
                         <option value="4">★★★★☆ — Very Good</option>
                         <option value="3">★★★☆☆ — Good</option>
                         <option value="2">★★☆☆☆ — Fair</option>
                         <option value="1">★☆☆☆☆ — Poor</option>
+
                     </select>
 
                     <button type="submit">
@@ -222,116 +347,264 @@
                     </button>
 
                 </form>
+
             </div>
 
         </div>
-    </div>
-    
 
     </section>
 
-    
+
+    <!-- Related Products -->
     <section class="pd-related">
+
         <h2>Related Products</h2>
+
         <div class="pd-related-grid">
+
             <article class="pd-related-card">
+
                 <a href="#" class="pd-related-image">
-                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=600&q=85" alt="Printed casual shirt" />
+                    <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=600&q=85"
+                         alt="Printed casual shirt" />
                 </a>
-                <h3>US Polo</h3><p>Tailored Cotton Casual Shirt</p>
-                <div class="pd-related-price">$40.00 <del>$50.00</del></div>
+
+                <h3>US Polo</h3>
+                <p>Tailored Cotton Casual Shirt</p>
+
+                <div class="pd-related-price">
+                    $40.00 <del>$50.00</del>
+                </div>
+
             </article>
+
             <article class="pd-related-card">
+
                 <a href="#" class="pd-related-image">
-                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=85" alt="Men's blazer" />
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=600&q=85"
+                         alt="Men's blazer" />
                 </a>
-                <h3>Roadstar</h3><p>Printed Blazer for Men</p>
-                <div class="pd-related-price">$60.00 <del>$70.00</del></div>
+
+                <h3>Roadstar</h3>
+                <p>Printed Blazer for Men</p>
+
+                <div class="pd-related-price">
+                    $60.00 <del>$70.00</del>
+                </div>
+
             </article>
+
             <article class="pd-related-card">
+
                 <a href="#" class="pd-related-image">
-                    <img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=85" alt="Red T-shirt" />
+                    <img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=600&q=85"
+                         alt="Red T-shirt" />
                 </a>
-                <h3>YK Disney</h3><p>Red Printed T-Shirt</p>
-                <div class="pd-related-price">$30.00 <del>$35.00</del></div>
+
+                <h3>YK Disney</h3>
+                <p>Red Printed T-Shirt</p>
+
+                <div class="pd-related-price">
+                    $30.00 <del>$35.00</del>
+                </div>
+
             </article>
+
             <article class="pd-related-card">
+
                 <a href="#" class="pd-related-image">
-                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=85" alt="Hand purse" />
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=85"
+                         alt="Hand purse" />
                 </a>
-                <h3>Flora</h3><p>Leather Hand Purse</p>
-                <div class="pd-related-price">$35.00 <del>$45.00</del></div>
+
+                <h3>Flora</h3>
+                <p>Leather Hand Purse</p>
+
+                <div class="pd-related-price">
+                    $35.00 <del>$45.00</del>
+                </div>
+
             </article>
+
         </div>
+
     </section>
 
+
+    <!-- Benefits -->
     <section class="pd-benefits">
-        <article><i class="fa-solid fa-box"></i><h3>Free Shipping</h3><p>Free shipping for orders above $150</p></article>
-        <article><i class="fa-regular fa-circle-dollar-to-slot"></i><h3>Money Guarantee</h3><p>Within 30 days for an exchange</p></article>
-        <article><i class="fa-solid fa-headphones"></i><h3>Online Support</h3><p>24 hours a day, 7 days a week</p></article>
-        <article><i class="fa-regular fa-credit-card"></i><h3>Flexible Payment</h3><p>Pay with multiple credit cards</p></article>
+
+        <article>
+            <i class="fa-solid fa-box"></i>
+            <h3>Free Shipping</h3>
+            <p>Free shipping for orders above $150</p>
+        </article>
+
+        <article>
+            <i class="fa-regular fa-circle-dollar-to-slot"></i>
+            <h3>Money Guarantee</h3>
+            <p>Within 30 days for an exchange</p>
+        </article>
+
+        <article>
+            <i class="fa-solid fa-headphones"></i>
+            <h3>Online Support</h3>
+            <p>24 hours a day, 7 days a week</p>
+        </article>
+
+        <article>
+            <i class="fa-regular fa-credit-card"></i>
+            <h3>Flexible Payment</h3>
+            <p>Pay with multiple credit cards</p>
+        </article>
+
     </section>
+
 </div>
 
+
 @section Scripts {
+
     <script>
-        // Product gallery
+
+        // ==============================
+        // Product Gallery
+        // ==============================
+
         document.querySelectorAll(".pd-thumb").forEach(function (thumb) {
+
             thumb.addEventListener("click", function () {
-                document.getElementById("mainProductImage").src = this.dataset.image;
-                document.querySelectorAll(".pd-thumb").forEach(x => x.classList.remove("active"));
+
+                document.getElementById("mainProductImage").src =
+                    this.dataset.image;
+
+                document.querySelectorAll(".pd-thumb").forEach(x => {
+                    x.classList.remove("active");
+                });
+
                 this.classList.add("active");
+
             });
+
         });
 
-        // Color selection
-        document.querySelectorAll(".pd-color").forEach(function (color) {
-            color.addEventListener("click", function () {
-                document.querySelectorAll(".pd-color").forEach(x => x.classList.remove("selected"));
-                this.classList.add("selected");
-            });
-        });
 
-        // Size selection
-        document.querySelectorAll(".pd-size").forEach(function (size) {
-            size.addEventListener("click", function () {
-                document.querySelectorAll(".pd-size").forEach(x => x.classList.remove("selected"));
-                this.classList.add("selected");
-            });
-        });
+        // ==============================
+        // Select Color and Size
+        // ==============================
 
+        function selectOption(button, selector, inputId) {
+
+            document.querySelectorAll(selector).forEach(x => {
+                x.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+            document.getElementById(inputId).value =
+                button.dataset.value;
+
+        }
+
+
+        // ==============================
         // Quantity
-        let quantity = 1;
-        const qtyValue = document.getElementById("qtyValue");
-        document.getElementById("qtyMinus").addEventListener("click", function () {
-            quantity = Math.max(1, quantity - 1);
-            qtyValue.textContent = quantity;
-        });
-        document.getElementById("qtyPlus").addEventListener("click", function () {
-            quantity++;
-            qtyValue.textContent = quantity;
-        });
+        // ==============================
 
-        // Demo buttons only: connect these to your MVC actions later.
-        document.getElementById("addToCart").addEventListener("click", function () {
-            document.getElementById("productMessage").textContent =
-                "Demo only: connect this button to your AddToCart action.";
-        });
-        document.getElementById("wishlistButton").addEventListener("click", function () {
-            this.classList.toggle("active");
-            this.innerHTML = this.classList.contains("active")
-                ? '<i class="fa-solid fa-heart"></i>'
-                : '<i class="fa-regular fa-heart"></i>';
-        });
+        const qtyPlus = document.getElementById("qtyPlus");
+        const qtyMinus = document.getElementById("qtyMinus");
 
-        // Tabs
-        document.querySelectorAll(".pd-tab").forEach(function (tab) {
-            tab.addEventListener("click", function () {
-                document.querySelectorAll(".pd-tab").forEach(x => x.classList.remove("active"));
-                document.querySelectorAll(".pd-tab-content").forEach(x => x.hidden = true);
-                this.classList.add("active");
-                document.getElementById(this.dataset.tab).hidden = false;
+        if (qtyPlus && qtyMinus) {
+
+            let quantity = 1;
+
+            const qtyValue = document.getElementById("qtyValue");
+            const quantityInput = document.getElementById("Quantity");
+
+            qtyPlus.addEventListener("click", function () {
+
+                quantity++;
+
+                qtyValue.textContent = quantity;
+                quantityInput.value = quantity;
+
             });
-        });
+
+            qtyMinus.addEventListener("click", function () {
+
+                quantity = Math.max(1, quantity - 1);
+
+                qtyValue.textContent = quantity;
+                quantityInput.value = quantity;
+
+            });
+
+        }
+
+
+        // ==============================
+        // Validate Add To Cart
+        // ==============================
+
+        const cartForm = document.getElementById("cartForm");
+
+        if (cartForm) {
+
+            cartForm.addEventListener("submit", function (e) {
+
+                const colorInput =
+                    document.getElementById("SelectedColor");
+
+                const sizeInput =
+                    document.getElementById("SelectedSize");
+
+                if (document.querySelector(".pd-color") &&
+                    colorInput.value === "") {
+
+                    e.preventDefault();
+
+                    alert("Please select a color.");
+
+                    return;
+                }
+
+                if (document.querySelector(".pd-size") &&
+                    sizeInput.value === "") {
+
+                    e.preventDefault();
+
+                    alert("Please select a size.");
+
+                    return;
+                }
+
+            });
+
+        }
+
+
+        // ==============================
+        // Wishlist
+        // ==============================
+
+        const wishlistButton =
+            document.getElementById("wishlistButton");
+
+        if (wishlistButton) {
+
+            wishlistButton.addEventListener("click", function () {
+
+                this.classList.toggle("active");
+
+                this.innerHTML =
+                    this.classList.contains("active")
+                    ? '<i class="fa-solid fa-heart"></i>'
+                    : '<i class="fa-regular fa-heart"></i>';
+
+            });
+
+        }
+
     </script>
+
 }

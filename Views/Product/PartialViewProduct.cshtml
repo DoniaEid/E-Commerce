@@ -21,7 +21,7 @@ else{
     {
         <div class="product-item-card">
                 <div class="product-img-box">
-                    <img src="@p.ImageUrl" alt="Dress">
+                    <img src="/Images/@p.ImageUrl" alt="Dress">
 
                         <div class="product-badges">
 
@@ -54,8 +54,21 @@ else{
                             <span class="current">$@p.NewPrice</span>
                             <span class="old">$@p.OldPrice</span>
                         </div>
-                        <button class="add-btn"><i class="fa-solid fa-bag-shopping"></i> Add</button>
-                    </div>
+
+                    <form asp-controller="Cart"
+                          asp-action="AddToCart"
+                          method="post">
+
+                        <input asp-for="@p.Id" type="hidden"  />
+
+                        <button type="submit" class="add-btn">
+                            <i class="fa-solid fa-bag-shopping"></i> Add
+                        </button>
+
+                    </form>      
+                    
+
+                   </div>
                 </div>
             </div>
 
