@@ -12,8 +12,12 @@ namespace E_Commerce.Controllers
             this.ProductBL = ProductBL;
         }
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string category)
         {
+            if(category != null)
+            {
+                ViewBag.Category = category;
+            }
             FilterByViewModel filterByViewModel = new FilterByViewModel();
             filterByViewModel.Categories = ProductBL.AllCategories();
             filterByViewModel.Sizes = ProductBL.AllSizess();
@@ -21,6 +25,7 @@ namespace E_Commerce.Controllers
             ViewBag.CountProduct = ProductBL.AllProducts().Count();
             return View(filterByViewModel);
         }
+      
 
         [HttpPost]
         public IActionResult FilterByCategory(string category)

@@ -145,9 +145,16 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            GetAll();
-        });
+                var savedCategory = '@ViewBag.Category';
 
+                if (savedCategory && savedCategory !== "" && savedCategory !== "null") {
+                    filterByCategory(savedCategory);
+
+                }
+                else {
+                    GetAll();
+                }
+            });
         function toggleSidebar() {
             const sidebar = document.getElementById('shopSidebar');
             const backdrop = document.getElementById('sidebarBackdrop');

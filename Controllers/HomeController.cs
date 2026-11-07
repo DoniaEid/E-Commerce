@@ -35,6 +35,7 @@ namespace E_Commerce.Controllers
             return View();
         }
 
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -45,7 +46,8 @@ namespace E_Commerce.Controllers
 
         public IActionResult FindProductsByCategory(string category)
         {
-            return RedirectToAction("FilterByCategory", "Product", new { category = category });
+            return RedirectToAction("Index", "Product", new {category});
+
         }
 
 

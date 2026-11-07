@@ -25,7 +25,11 @@ namespace E_Commerce
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             builder.Services.AddScoped<ProductBL>();
             builder.Services.AddScoped<CreateAdmin>();
@@ -66,7 +70,7 @@ namespace E_Commerce
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
-
+            app.UseSession();
             app.Run();
         }
     }
