@@ -1,142 +1,371 @@
 ﻿@{
-ViewData["Title"] = "Home";
-Layout = "_Layout";
+    ViewData["Title"] = "Home - Quiet Luxury Edit";
+    Layout = "_Layout";
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/HomeStyle.css" asp-append-version="true" />
 }
 
-<main>
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <span class="hero-subtitle">Classic Exclusive</span>
-            <h1>Women's Collection</h1>
-            <p class="hero-discount">UPTO 40% OFF</p>
-            <a href="#" class="btn-shop-now">Shop Now <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-        <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60" alt="Women's Collection">
-        </div>
-    </section>
+<script>document.documentElement.classList.add('js');</script>
+<div class="progress" id="progress"></div>
 
-    <!-- Shop by Categories -->
-    <section>
-        <div class="section-header">
-            <h2>Shop by Categories</h2>
-            <div class="slider-arrows">
-                <button class="arrow-btn"><i class="fa-solid fa-chevron-left"></i></button>
-                <button class="arrow-btn"><i class="fa-solid fa-chevron-right"></i></button>
+<!-- Minimalist Floating Header Bar -->
+<div class="editorial-topbar">
+    <span>Complimentary global shipping on orders over $150</span>
+    <div class="topbar-links">
+        <a href="#">The Journal</a>
+        <a href="#">Stores</a>
+        <a href="#">Client Care</a>
+    </div>
+</div>
+
+<main class="home-cinematic">
+
+    <!-- Hero: Cinematic Split Screen -->
+    <section class="hero-cinematic">
+        <div class="hero-content-left reveal">
+            <span class="collection-tag">Collection No. 04 — Winter</span>
+            <h1>Architecture<br><em>of Simplicity</em></h1>
+            <p>Thoughtfully crafted silhouettes using raw cashmere, organic wool, and fluid silks. Designed to outlast seasons.</p>
+            <div class="hero-cta-group">
+                <a href="#bestsellers" class="btn-cinematic-dark">Explore Collection <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#editorial-look" class="btn-cinematic-ghost">Watch the Film</a>
+            </div>
+            <div class="hero-metrics">
+                <div><strong>100%</strong><span>Sustainable Fabrics</span></div>
+                <div><strong>30-Day</strong><span>Complimentary Returns</span></div>
             </div>
         </div>
-        <div class="categories-grid">
-            <div class="category-card">
-                <img src="https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?w=300&auto=format&fit=crop" alt="Men">
-                <button class="cat-btn">Men's Wear</button>
+        <div class="hero-visual-right zoom">
+            <div class="main-portrait">
+                <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1200&auto=format&fit=crop&q=80" alt="Quiet luxury winter edit">
             </div>
-            <div class="category-card">
-                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop" alt="Women">
-                <button class="cat-btn">Women's Wear</button>
-            </div>
-            <div class="category-card">
-                <img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=300&auto=format&fit=crop" alt="Kids">
-                <button class="cat-btn">Kids Wear</button>
-            </div>
-            <div class="category-card">
-                <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=300&auto=format&fit=crop" alt="Accessories">
-                <button class="cat-btn">Accessories</button>
+            <div class="floating-badge">
+                <span class="badge-title">Featured Piece</span>
+                <span class="badge-subtitle">The Oversized Cashmere Coat</span>
             </div>
         </div>
     </section>
 
-    <!-- Our Bestseller -->
-    <section>
-        <div class="section-header" style="justify-content: center;">
-            <h2>Our Bestseller</h2>
+    <!-- Marquee: Infinite Luxury Ticker -->
+    <div class="cinematic-marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span>Timeless Design</span><span>•</span><span>Uncompromised Quality</span><span>•</span><span>Quiet Luxury</span><span>•</span><span>Sustainably Sourced</span><span>•</span>
+            <span>Timeless Design</span><span>•</span><span>Uncompromised Quality</span><span>•</span><span>Quiet Luxury</span><span>•</span><span>Sustainably Sourced</span><span>•</span>
         </div>
-        <div class="products-grid">
+    </div>
 
-            <!-- Product 1 -->
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=300&auto=format&fit=crop" alt="Product">
-                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
-                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
-                </div>
-                <div class="product-info">
-                    <h4>Mini Dress - Sale</h4>
-                    <span class="product-category">Dress</span>
-                    <div class="product-price-row">
-                        <div class="product-price">
-                            <span class="current-price">$120.00</span>
-                            <span class="old-price">$150.00</span>
+    <!-- Categories: Horizontal Smooth Scroll with Navigation -->
+    <section class="section-pad categories-section">
+        <div class="section-header reveal">
+            <div class="header-titles">
+                <span class="section-subtitle">Curated Selections</span>
+                <h2>Shop by Category</h2>
+            </div>
+            <div class="carousel-nav-buttons">
+                <button class="nav-btn prev-btn" aria-label="Previous"><i class="fa-solid fa-arrow-left"></i></button>
+                <button class="nav-btn next-btn" aria-label="Next"><i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+
+        <div class="category-carousel-wrapper" id="catSlider">
+            <div class="category-track" data-stagger>
+
+                <a href="#" class="cat-tile reveal">
+                    <div class="tile-img">
+                        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&auto=format&fit=crop" alt="Womenswear">
+                    </div>
+                    <div class="tile-glass-info">
+                        <div class="tile-text">
+                            <span>01 / Collection</span>
+                            <h3>Womenswear</h3>
                         </div>
-                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+
+                <a href="#" class="cat-tile reveal">
+                    <div class="tile-img">
+                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop" alt="Menswear">
+                    </div>
+                    <div class="tile-glass-info">
+                        <div class="tile-text">
+                            <span>02 / Tailored</span>
+                            <h3>Menswear</h3>
+                        </div>
+                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+
+                <a href="#" class="cat-tile reveal">
+                    <div class="tile-img">
+                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop" alt="Accessories">
+                    </div>
+                    <div class="tile-glass-info">
+                        <div class="tile-text">
+                            <span>03 / Luxury</span>
+                            <h3>Leather & Bags</h3>
+                        </div>
+                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+
+                <a href="#" class="cat-tile reveal">
+                    <div class="tile-img">
+                        <img src="https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?w=800&auto=format&fit=crop" alt="Kids & Juniors">
+                    </div>
+                    <div class="tile-glass-info">
+                        <div class="tile-text">
+                            <span>04 / Essentials</span>
+                            <h3>Kids Collection</h3>
+                        </div>
+                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+
+                <a href="#" class="cat-tile reveal">
+                    <div class="tile-img">
+                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop" alt="Outerwear">
+                    </div>
+                    <div class="tile-glass-info">
+                        <div class="tile-text">
+                            <span>05 / Winter</span>
+                            <h3>Outerwear</h3>
+                        </div>
+                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+
+                <a href="#" class="cat-tile reveal">
+                    <div class="tile-img">
+                        <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&auto=format&fit=crop" alt="Footwear">
+                    </div>
+                    <div class="tile-glass-info">
+                        <div class="tile-text">
+                            <span>06 / Steps</span>
+                            <h3>Footwear</h3>
+                        </div>
+                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Bestsellers: Sleek Product Showcase -->
+    <section class="section-pad" id="bestsellers">
+        <div class="section-header center reveal">
+            <span class="section-subtitle">Most Coveted</span>
+            <h2>The Essentials</h2>
+            <p>Our most coveted silhouettes, restocked in limited quantities.</p>
+        </div>
+
+        <div class="product-showcase" data-stagger>
+
+            <article class="luxury-card reveal">
+                <div class="p-media">
+                    <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=700&auto=format&fit=crop" alt="Fitted Mini Dress">
+                    <div class="p-badges">
+                        <span class="badge-sale">-20%</span>
+                        <span class="badge-limited">Limited</span>
+                    </div>
+                    <button class="action-wish" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                    <button class="quick-add-btn"><i class="fa-solid fa-bag-shopping"></i> Quick Add</button>
+                </div>
+                <div class="p-details">
+                    <span class="p-category">Dresses</span>
+                    <h3>Fitted Silk Blend Dress</h3>
+                    <div class="p-pricing">
+                        <span class="current-price">$120.00</span>
+                        <span class="original-price">$150.00</span>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Product 2 -->
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=300&auto=format&fit=crop" alt="Product">
-                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
-                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+            <article class="luxury-card reveal">
+                <div class="p-media">
+                    <img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=700&auto=format&fit=crop" alt="Handheld bag">
+                    <div class="p-badges">
+                        <span class="badge-sale">-20%</span>
+                    </div>
+                    <button class="action-wish" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                    <button class="quick-add-btn"><i class="fa-solid fa-bag-shopping"></i> Quick Add</button>
                 </div>
-                <div class="product-info">
-                    <h4>Women Textured Handheld Bag</h4>
-                    <span class="product-category">Bags</span>
-                    <div class="product-price-row">
-                        <div class="product-price">
-                            <span class="current-price">$80.00</span>
-                            <span class="old-price">$100.00</span>
-                        </div>
-                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                <div class="p-details">
+                    <span class="p-category">Leather Goods</span>
+                    <h3>Textured Calfskin Bag</h3>
+                    <div class="p-pricing">
+                        <span class="current-price">$80.00</span>
+                        <span class="original-price">$100.00</span>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Product 3 -->
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&auto=format&fit=crop" alt="Product">
-                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
-                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+            <article class="luxury-card reveal">
+                <div class="p-media">
+                    <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=700&auto=format&fit=crop" alt="Cotton t-shirt">
+                    <div class="p-badges">
+                        <span class="badge-sale">-25%</span>
+                    </div>
+                    <button class="action-wish" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                    <button class="quick-add-btn"><i class="fa-solid fa-bag-shopping"></i> Quick Add</button>
                 </div>
-                <div class="product-info">
-                    <h4>Pure Color T-Shirt</h4>
-                    <span class="product-category">T-Shirt</span>
-                    <div class="product-price-row">
-                        <div class="product-price">
-                            <span class="current-price">$45.00</span>
-                            <span class="old-price">$60.00</span>
-                        </div>
-                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                <div class="p-details">
+                    <span class="p-category">Essentials</span>
+                    <h3>Organic Cotton Tee</h3>
+                    <div class="p-pricing">
+                        <span class="current-price">$45.00</span>
+                        <span class="original-price">$60.00</span>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <!-- Product 4 -->
-            <div class="product-card">
-                <div class="product-img">
-                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=300&auto=format&fit=crop" alt="Product">
-                    <button class="wishlist-icon"><i class="fa-regular fa-heart"></i></button>
-                    <button class="eye-icon"><i class="fa-regular fa-eye"></i></button>
+            <article class="luxury-card reveal">
+                <div class="p-media">
+                    <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=700&auto=format&fit=crop" alt="Sneakers">
+                    <div class="p-badges">
+                        <span class="badge-sale">-27%</span>
+                    </div>
+                    <button class="action-wish" aria-label="Wishlist"><i class="fa-regular fa-heart"></i></button>
+                    <button class="quick-add-btn"><i class="fa-solid fa-bag-shopping"></i> Quick Add</button>
                 </div>
-                <div class="product-info">
-                    <h4>Casual Sneakers</h4>
-                    <span class="product-category">Shoes</span>
-                    <div class="product-price-row">
-                        <div class="product-price">
-                            <span class="current-price">$95.00</span>
-                            <span class="old-price">$130.00</span>
-                        </div>
-                        <button class="btn-add-cart"><i class="fa-solid fa-bag-shopping"></i> Add</button>
+                <div class="p-details">
+                    <span class="p-category">Footwear</span>
+                    <h3>Minimalist Leather Sneaker</h3>
+                    <div class="p-pricing">
+                        <span class="current-price">$95.00</span>
+                        <span class="original-price">$130.00</span>
                     </div>
                 </div>
-            </div>
+            </article>
 
         </div>
     </section>
+
+    <!-- Editorial Full Width Banner -->
+    <section class="section-pad" id="editorial-look">
+        <div class="editorial-banner zoom">
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=1600&auto=format&fit=crop&q=80" alt="Cinematic editorial look">
+            <div class="banner-content">
+                <span>The Winter Narrative</span>
+                <h2>Layers worth living in.</h2>
+                <p>An exploration of warmth, texture, and understated elegance designed for daily wear.</p>
+                <a href="#" class="btn-cinematic-light">Explore the Editorial <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials: Minimalist Quotes -->
+    <section class="section-pad">
+        <div class="section-header center reveal">
+            <span class="section-subtitle">Testimonials</span>
+            <h2>Voices & Perspectives</h2>
+            <p>Words from those who experience our garments daily.</p>
+        </div>
+        <div class="quotes-grid" data-stagger>
+            <figure class="quote-card reveal">
+                <div class="star-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <blockquote>“The fabric weight and structure feel comparable to houses triple the price. Absolute perfection.”</blockquote>
+                <figcaption>Sara M. — London</figcaption>
+            </figure>
+            <figure class="quote-card reveal">
+                <div class="star-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <blockquote>“Unboxing felt like receiving a gift from an atelier. Flawless presentation and true-to-size fit.”</blockquote>
+                <figcaption>Nour A. — Dubai</figcaption>
+            </figure>
+            <figure class="quote-card reveal">
+                <div class="star-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                </div>
+                <blockquote>“Customer care handled an exchange within hours. Remarkable dedication to service.”</blockquote>
+                <figcaption>Omar K. — Paris</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Newsletter: Clean Minimalist Form -->
+    <section class="section-pad">
+        <div class="newsletter-box zoom">
+            <div class="news-inner">
+                <h2>Join the Inner Circle</h2>
+                <p>Receive 10% off your initial acquisition, alongside private invitations to seasonal sample sales.</p>
+                <form class="news-action-form" onsubmit="return false;">
+                    <input type="email" placeholder="Enter your email address" aria-label="Email address" required>
+                    <button type="submit">Request Access</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
 </main>
+
+<script>
+            (function () {
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            document.querySelectorAll('[data-stagger]').forEach(function (p) {
+            Array.prototype.forEach.call(p.children, function (c, i) {
+            c.style.setProperty('--d', (i * 0.15) + 's');
+            });
+            });
+
+            var items = document.querySelectorAll('.reveal, .zoom');
+            if (!('IntersectionObserver' in window) || reduce) {
+            items.forEach(function (el) { el.classList.add('in'); });
+            } else {
+            var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+            if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+            }
+            });
+            }, {
+            threshold: 0.05,
+            rootMargin: '0px 0px -40px 0px' 
+            });
+            items.forEach(function (el) { io.observe(el); });
+            }
+
+            var bar = document.getElementById('progress');
+            var ticking = false;
+            function onScroll() {
+            var h = document.documentElement.scrollHeight - window.innerHeight;
+            if (bar && h > 0) bar.style.transform = 'scaleX(' + (window.scrollY / h) + ')';
+            ticking = false;
+            }
+            window.addEventListener('scroll', function () {
+            if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+            }, { passive: true });
+            onScroll();
+
+            const slider = document.getElementById('catSlider');
+            const nextBtn = document.querySelector('.next-btn');
+            const prevBtn = document.querySelector('.prev-btn');
+
+            if (slider && nextBtn && prevBtn) {
+            nextBtn.addEventListener('click', () => {
+            slider.scrollBy({ left: 370, behavior: 'smooth' });
+            });
+            prevBtn.addEventListener('click', () => {
+            slider.scrollBy({ left: -370, behavior: 'smooth' });
+            });
+            }
+
+            document.querySelectorAll('.action-wish').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var icon = this.querySelector('i');
+            icon.classList.toggle('fa-regular');
+            icon.classList.toggle('fa-solid');
+            icon.style.color = icon.classList.contains('fa-solid') ? '#111' : '';
+            });
+            });
+            })();
+</script>

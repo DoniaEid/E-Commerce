@@ -26,7 +26,6 @@ body {
     margin-bottom: 30px;
 }
 
-/* ===== Cards ===== */
 .checkout-card,
 .summary-card {
     background: #fff;
@@ -49,7 +48,6 @@ body {
     top: 25px;
 }
 
-/* ===== Product group ===== */
 .product-group {
     display: flex;
     gap: 20px;
@@ -118,7 +116,6 @@ body {
         font-weight: 800;
     }
 
-/* ===== Variant row (size + color + qty) ===== */
 .variant {
     display: grid;
     grid-template-columns: minmax(150px, 1fr) 105px 135px 115px;
@@ -404,28 +401,40 @@ body {
     border-top: 1px dashed var(--line);
 }
 
+
+
+
 .variant-delete {
     display: flex;
     justify-content: flex-end;
 }
+
 .delete-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: none;
+    width: 36px; 
+    height: 36px;
+    border: 1px solid #dee2e6; 
     border-radius: 8px;
-    background: #e03131;
-    color: #fff;
-    font-size: 14px;
+    background: #ffffff; 
+    color: #ff8787; 
+    font-size: 16px; 
     cursor: pointer;
-    transition: .2s;
+    transition: all .2s ease;
     margin-right: -10px;
     margin-left: 0;
 }
 
     .delete-btn:hover {
-        background: #c92a2a;
-        box-shadow: 0 4px 10px rgba(224, 49, 49, .35);
+        background: #e03131; 
+        border-color: #e03131; 
+        color: #ffffff;
+    }
+
+    .delete-btn:active {
+        background: #9b1c1c; 
+        border-color: #9b1c1c;
+        color: #ffffff;
+        transform: scale(0.95); 
     }
