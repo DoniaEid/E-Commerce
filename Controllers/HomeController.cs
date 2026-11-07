@@ -6,9 +6,28 @@ namespace E_Commerce.Controllers
 {
     public class HomeController : Controller
     {
+        ProductBL productBL;
+        public HomeController(ProductBL productBL)
+        {
+            this.productBL = productBL;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var x = productBL.AllCategories();
+
+            HomeViewModel homeViewModel = new HomeViewModel();
+
+            List<string> All = new List<string>();
+
+            foreach (var item in x)
+            {
+                All.Add(item.Key);
+            }
+
+            homeViewModel.Categories = All;
+
+            return View(homeViewModel);
         }
 
         public IActionResult Privacy()
@@ -21,5 +40,20 @@ namespace E_Commerce.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+     
+
+        public IActionResult FindProductsByCategory(string category)
+        {
+            return RedirectToAction("FilterByCategory", "Product", new { category = category });
+        }
+
+
+
+
+
+
+
+
     }
 }

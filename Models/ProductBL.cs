@@ -21,6 +21,7 @@ namespace E_Commerce.Models
 
             return result;
         }
+
         public List<Product> FilterByPrice(int price)
         {
             var result = _Context.Product

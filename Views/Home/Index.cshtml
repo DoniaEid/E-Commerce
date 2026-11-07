@@ -6,7 +6,7 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/HomeStyle.css" asp-append-version="true" />
 }
-
+@model HomeViewModel
 <script>document.documentElement.classList.add('js');</script>
 <div class="progress" id="progress"></div>
 
@@ -56,6 +56,8 @@
         </div>
     </div>
 
+
+
     <!-- Categories: Horizontal Smooth Scroll with Navigation -->
     <section class="section-pad categories-section">
         <div class="section-header reveal">
@@ -71,88 +73,40 @@
 
         <div class="category-carousel-wrapper" id="catSlider">
             <div class="category-track" data-stagger>
-
-                <a href="#" class="cat-tile reveal">
-                    <div class="tile-img">
-                        <img src="https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=800&auto=format&fit=crop" alt="Womenswear">
-                    </div>
-                    <div class="tile-glass-info">
-                        <div class="tile-text">
-                            <span>01 / Collection</span>
-                            <h3>Womenswear</h3>
+                @{
+                    int count = 1;
+                }
+                @foreach(var category in Model.Categories)
+                {
+                    <a asp-controller="Home" asp-action="FindProductsByCategory" asp-route-category="@category" class="cat-tile reveal">
+                        <div class="tile-img">
+                            <img src="/Images/@($"{category}Collection.jpg")" alt="@category Collection">
                         </div>
-                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </div>
-                </a>
-
-                <a href="#" class="cat-tile reveal">
-                    <div class="tile-img">
-                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop" alt="Menswear">
-                    </div>
-                    <div class="tile-glass-info">
-                        <div class="tile-text">
-                            <span>02 / Tailored</span>
-                            <h3>Menswear</h3>
+                        <div class="tile-glass-info">
+                            <div class="tile-text">
+                                <span>0@(count++) / Collection</span>
+                                <h3>@category</h3>
+                            </div>
+                            <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
                         </div>
-                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </div>
-                </a>
-
-                <a href="#" class="cat-tile reveal">
-                    <div class="tile-img">
-                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop" alt="Accessories">
-                    </div>
-                    <div class="tile-glass-info">
-                        <div class="tile-text">
-                            <span>03 / Luxury</span>
-                            <h3>Leather & Bags</h3>
-                        </div>
-                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </div>
-                </a>
-
-                <a href="#" class="cat-tile reveal">
-                    <div class="tile-img">
-                        <img src="https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?w=800&auto=format&fit=crop" alt="Kids & Juniors">
-                    </div>
-                    <div class="tile-glass-info">
-                        <div class="tile-text">
-                            <span>04 / Essentials</span>
-                            <h3>Kids Collection</h3>
-                        </div>
-                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </div>
-                </a>
-
-                <a href="#" class="cat-tile reveal">
-                    <div class="tile-img">
-                        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop" alt="Outerwear">
-                    </div>
-                    <div class="tile-glass-info">
-                        <div class="tile-text">
-                            <span>05 / Winter</span>
-                            <h3>Outerwear</h3>
-                        </div>
-                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </div>
-                </a>
-
-                <a href="#" class="cat-tile reveal">
-                    <div class="tile-img">
-                        <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=800&auto=format&fit=crop" alt="Footwear">
-                    </div>
-                    <div class="tile-glass-info">
-                        <div class="tile-text">
-                            <span>06 / Steps</span>
-                            <h3>Footwear</h3>
-                        </div>
-                        <span class="tile-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                    </div>
-                </a>
-
+                    </a>
+                   
+                }
+           
             </div>
         </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Bestsellers: Sleek Product Showcase -->
     <section class="section-pad" id="bestsellers">
@@ -288,6 +242,9 @@
             </figure>
         </div>
     </section>
+
+
+
 
     <!-- Newsletter: Clean Minimalist Form -->
     <section class="section-pad">
